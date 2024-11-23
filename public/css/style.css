@@ -1,0 +1,14 @@
+.dark {
+    --background: #222;
+    --backgroundf: #171717;
+    --navbar: #111;
+    --text: white;
+    transition: 1s ease;
+}
+:root {
+    --background: #f8f9fa;
+    --backgroundf: #f8f9fa;
+    --navbar: white;
+    --text: black;
+    transition: 1s ease;
+}
