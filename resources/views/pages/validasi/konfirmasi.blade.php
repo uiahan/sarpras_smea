@@ -38,6 +38,15 @@
                         </div>                        
                         <div class="col-xl-6 col-12 mt-3 mt-xl-0">
                             <div>
+                                <label for="harga_beli" class="form-label">Harga Beli</label>
+                                <input type="text" id="harga_beli" value="{{ $pengajuan->harga_beli }}" name="harga_beli" class="form-control border-0"
+                                    style="background-color: #ededed" min="0" placeholder="Masukkan harga beli (boleh dikosongkan dahulu)"
+                                    oninput="updateFormatted('harga_beli', 'formattedHargaBeli')">
+                                <div id="formattedHargaBeli" style="margin-top: 5px; color: #888;"></div>
+                            </div>
+                        </div>
+                        <div class="col-12 mt-3">
+                            <div>
                                 <label for="tanggal_realisasi" class="form-label">Tanggal Realisasi</label>
                                 <input type="date" id="tanggal_realisasi"
                                     value="{{ $pengajuan->tanggal_realisasi }}" required name="tanggal_realisasi"
@@ -77,6 +86,31 @@
         new DataTable('#example');
 
         console.log("Session Notification: {{ session('notif') }}");
+
+        function updateFormatted(inputId, formattedId) {
+            const input = document.getElementById(inputId);
+            const value = input.value.replace(/[^\d]/g, '');
+            const formattedValue = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            document.getElementById(formattedId).textContent = 'Rp ' + formattedValue;
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const hargaSatuan = document.getElementById('harga_satuan');
+            const banyakBarang = document.getElementById('banyak');
+            const totalHarga = document.getElementById('total_harga');
+            const formattedTotalHarga = document.getElementById('formattedTotalHarga');
+
+            function hitungTotalHarga() {
+                const harga = parseFloat(hargaSatuan.value.replace(/[^\d]/g, '')) || 0;
+                const banyak = parseFloat(banyakBarang.value) || 0;
+                const total = harga * banyak;
+                totalHarga.value = total;
+                formattedTotalHarga.textContent = 'Rp ' + total.toLocaleString('id-ID');
+            }
+
+            hargaSatuan.addEventListener('input', hitungTotalHarga);
+            banyakBarang.addEventListener('input', hitungTotalHarga);
+        });
 
         document.addEventListener("DOMContentLoaded", function() {
             const hargaSatuan = document.getElementById('harga_satuan');

@@ -38,15 +38,8 @@
                                     </select>
                                 </div>
                             </div>
-                        @endif
-                        @if (in_array($user->role, [
-                                'Akutansi Keuangan Lembaga',
-                                'Bisnis Daring Pemasaran',
-                                'Otomatisasi Tata Kelola Perkantoran',
-                                'Teknik Jaringan Komputer',
-                                'Rekayasa Perangkat Lunak', 'waka kurikulum', 'waka sarpras', 'waka hubin', 'waka kesiswaan', 'waka evbank'
-                            ]))
-                            <div class="col-xl-6 col-12">
+                            @else
+                            <div class="col-xl-6 col-12" hidden>
                                 <div>
                                     <label for="jurusan" class="form-label">Nama Jurusan</label>
                                     <input type="text" id="jurusan" name="jurusan" readonly
@@ -55,6 +48,9 @@
                                 </div>
                             </div>
                         @endif
+                       
+                         
+                      
                         @if (in_array($user->role, ['admin']))
                             <div class="col-xl-6 col-12 mt-3 mt-xl-0">
                                 <div>
@@ -63,35 +59,12 @@
                                         readonly class="form-control border-0" style="background-color: #ededed" required>
                                 </div>
                             </div>
-                        @endif
-                        @if (in_array($user->role, [
-                                'Akutansi Keuangan Lembaga',
-                                'Bisnis Daring Pemasaran',
-                                'Otomatisasi Tata Kelola Perkantoran',
-                                'Teknik Jaringan Komputer',
-                                'Rekayasa Perangkat Lunak', 'waka kurikulum', 'waka sarpras', 'waka hubin', 'waka kesiswaan', 'waka evbank'
-                            ]))
+                            @else
                             <div class="col-xl-6 col-12" hidden>
                                 <div>
                                     <label for="status" class="form-label">Status</label>
                                     <input type="text" id="status" name="status" value="{{ $pengajuan->status }}"
                                         readonly class="form-control border-0" style="background-color: #ededed" required>
-                                </div>
-                            </div>
-                        @endif
-                        @if (in_array($user->role, [
-                                'Akutansi Keuangan Lembaga',
-                                'Bisnis Daring Pemasaran',
-                                'Otomatisasi Tata Kelola Perkantoran',
-                                'Teknik Jaringan Komputer',
-                                'Rekayasa Perangkat Lunak', 'waka kurikulum', 'waka sarpras', 'waka hubin', 'waka kesiswaan', 'waka evbank'
-                            ]))
-                            <div class="col-xl-6 col-12 mt-3 mt-xl-0">
-                                <div>
-                                    <label for="barang" class="form-label">Nama Barang</label>
-                                    <input type="text" id="barang" name="barang" value="{{ $pengajuan->barang }}"
-                                        class="form-control border-0" style="background-color: #ededed"
-                                        placeholder="masukan nama barang" required>
                                 </div>
                             </div>
                         @endif
@@ -104,7 +77,17 @@
                                         placeholder="masukan nama barang" required>
                                 </div>
                             </div>
+                            @else
+                            <div class="col-xl-6 col-12 mt-3 mt-xl-0">
+                                <div>
+                                    <label for="barang" class="form-label">Nama Barang</label>
+                                    <input type="text" id="barang" name="barang" value="{{ $pengajuan->barang }}"
+                                        class="form-control border-0" style="background-color: #ededed"
+                                        placeholder="masukan nama barang" required>
+                                </div>
+                            </div>
                         @endif
+                        @if ($user->role == 'admin')
                         <div class="col-xl-6 col-12 mt-3">
                             <div>
                                 <label for="program_kegiatan" class="form-label">Program Kegiatan</label>
@@ -113,6 +96,16 @@
                                     placeholder="masukan program kegiatan" required>
                             </div>
                         </div>
+                        @else
+                        <div class="col-xl-6 col-12 mt-3 mt-xl-0">
+                            <div>
+                                <label for="program_kegiatan" class="form-label">Program Kegiatan</label>
+                                <input type="text" id="program_kegiatan" value="{{ $pengajuan->program_kegiatan }}"
+                                    name="program_kegiatan" class="form-control border-0" style="background-color: #ededed"
+                                    placeholder="masukan program kegiatan" required>
+                            </div>
+                        </div>
+                        @endif                   
                         <div class="col-xl-6 col-12 mt-3">
                             <div>
                                 <label for="tahun" class="form-label">Tahun Pengajuan</label>
@@ -139,19 +132,23 @@
                         <div class="col-xl-6 col-12 mt-3">
                             <div>
                                 <label for="harga_satuan" class="form-label">Harga Satuan</label>
-                                <input type="number" id="harga_satuan" value="{{ $pengajuan->harga_satuan }}"
-                                    name="harga_satuan" class="form-control border-0" style="background-color: #ededed"
-                                    min="0" placeholder="masukan harga satuan" required>
+                                <input type="text" value="{{ $pengajuan->harga_satuan }}" id="harga_satuan" name="harga_satuan" class="form-control border-0"
+                                    style="background-color: #ededed" placeholder="Masukkan harga satuan"
+                                    oninput="updateFormatted('harga_satuan', 'formattedAnggaran')" required>
+                                <div id="formattedAnggaran" style="margin-top: 5px; color: #888;"></div>
                             </div>
                         </div>
+                        @if ($user->role == 'admin')     
                         <div class="col-xl-6 col-12 mt-3">
                             <div>
                                 <label for="harga_beli" class="form-label">Harga Beli</label>
-                                <input type="number" value="{{ $pengajuan->harga_beli }}" id="harga_beli"
-                                    name="harga_beli" class="form-control border-0" style="background-color: #ededed"
-                                    min="0" placeholder="masukan harga beli (boleh dikosongkan dahulu)">
+                                <input type="text" id="harga_beli" value="{{ $pengajuan->harga_beli }}" name="harga_beli" class="form-control border-0"
+                                    style="background-color: #ededed" min="0" placeholder="Masukkan harga beli (boleh dikosongkan dahulu)"
+                                    oninput="updateFormatted('harga_beli', 'formattedHargaBeli')">
+                                <div id="formattedHargaBeli" style="margin-top: 5px; color: #888;"></div>
                             </div>
                         </div>
+                        @endif
                         <div class="col-xl-6 col-12 mt-3">
                             <div>
                                 <label for="banyak" class="form-label">Banyak Barang</label>
@@ -163,9 +160,9 @@
                         <div class="col-xl-6 col-12 mt-3">
                             <div>
                                 <label for="total_harga" class="form-label">Total Harga</label>
-                                <input type="number" value="{{ $pengajuan->total_harga }}" id="total_harga"
-                                    name="total_harga" readonly required class="form-control border-0"
-                                    style="background-color: #ededed" placeholder="total harga otomatis muncul">
+                                <input value="{{ $pengajuan->total_harga }}" type="text" id="total_harga" name="total_harga" class="form-control border-0"
+                                    style="background-color: #ededed" placeholder="Total harga otomatis muncul" readonly>
+                                <div id="formattedTotalHarga" style="margin-top: 5px; color: #888;"></div>
                             </div>
                         </div>
                         <div class="col-xl-6 col-12 mt-3">
@@ -218,6 +215,31 @@
         new DataTable('#example');
 
         console.log("Session Notification: {{ session('notif') }}");
+
+        function updateFormatted(inputId, formattedId) {
+            const input = document.getElementById(inputId);
+            const value = input.value.replace(/[^\d]/g, '');
+            const formattedValue = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            document.getElementById(formattedId).textContent = 'Rp ' + formattedValue;
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const hargaSatuan = document.getElementById('harga_satuan');
+            const banyakBarang = document.getElementById('banyak');
+            const totalHarga = document.getElementById('total_harga');
+            const formattedTotalHarga = document.getElementById('formattedTotalHarga');
+
+            function hitungTotalHarga() {
+                const harga = parseFloat(hargaSatuan.value.replace(/[^\d]/g, '')) || 0;
+                const banyak = parseFloat(banyakBarang.value) || 0;
+                const total = harga * banyak;
+                totalHarga.value = total;
+                formattedTotalHarga.textContent = 'Rp ' + total.toLocaleString('id-ID');
+            }
+
+            hargaSatuan.addEventListener('input', hitungTotalHarga);
+            banyakBarang.addEventListener('input', hitungTotalHarga);
+        });
 
         document.addEventListener("DOMContentLoaded", function() {
             const hargaSatuan = document.getElementById('harga_satuan');

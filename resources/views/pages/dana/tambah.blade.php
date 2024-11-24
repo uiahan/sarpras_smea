@@ -33,7 +33,8 @@
                             <div>
                                 <label for="user_id" class="form-label">User Id</label>
                                 <input type="text" id="user_id" name="user_id" class="form-control border-0"
-                                    style="background-color: #ededed" value="{{ $user->id }}" placeholder="masukan user_id" required>
+                                    style="background-color: #ededed" value="{{ $user->id }}"
+                                    placeholder="masukan user_id" required>
                             </div>
                         </div>
                         <div>
@@ -99,7 +100,13 @@
         }
 
         function confirmSubmit(event) {
-            event.preventDefault(); // Mencegah form dikirim sebelum konfirmasi
+            event.preventDefault(); // Mencegah form dikirim langsung
+
+            const form = event.target.form; // Ambil elemen form
+            if (!form.checkValidity()) {
+                form.reportValidity(); // Menampilkan pesan validasi HTML
+                return; // Jika tidak valid, hentikan proses
+            }
 
             // Menampilkan SweetAlert2
             Swal.fire({
@@ -113,8 +120,7 @@
                 cancelButtonText: 'Batal'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Jika pengguna mengonfirmasi, kirim form
-                    event.target.form.submit(); // Mengirim form
+                    form.submit(); // Kirim form jika dikonfirmasi
                 }
             });
         }

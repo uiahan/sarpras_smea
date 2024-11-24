@@ -15,7 +15,7 @@ class DokumenController extends Controller
         $user = Auth::user();
 
         $userr = User::where('role', '!=', 'admin')
-            ->with(['uploads', 'uploadPengambilans'])
+            ->with(['uploads'])
             ->get();
 
         $pengajuanCount = Upload::count();

@@ -51,53 +51,18 @@
                         </div>
                         <div class="mt-3">
                             <label for="role" class="form-label">Role</label>
-                            <select id="role" name="role" class="form-control border-0"
-                                style="background-color: #ededed" required>
-                                <option value="" disabled {{ old('role') ? '' : 'selected' }}>Pilih Role</option>
-                                <option value="Akutansi Keuangan Lembaga"
-                                    {{ old('role') == 'Akutansi Keuangan Lembaga' ? 'selected' : '' }}>
-                                    Akutansi Keuangan Lembaga
-                                </option>
-                                <option value="Bisnis Daring Pemasaran"
-                                    {{ old('role') == 'Bisnis Daring Pemasaran' ? 'selected' : '' }}>
-                                    Bisnis Daring Pemasaran
-                                </option>
-                                <option value="Otomatisasi Tata Kelola Perkantoran"
-                                    {{ old('role') == 'Otomatisasi Tata Kelola Perkantoran' ? 'selected' : '' }}>
-                                    Otomatisasi Tata Kelola Perkantoran
-                                </option>
-                                <option value="Teknik Jaringan Komputer"
-                                    {{ old('role') == 'Teknik Jaringan Komputer' ? 'selected' : '' }}>
-                                    Teknik Jaringan Komputer
-                                </option>
-                                <option value="Rekayasa Perangkat Lunak"
-                                    {{ old('role') == 'Rekayasa Perangkat Lunak' ? 'selected' : '' }}>
-                                    Rekayasa Perangkat Lunak
-                                </option>
-                                <option value="waka kurikulum" {{ old('role') == 'waka kurikulum' ? 'selected' : '' }}>
-                                    Waka Kurikulum
-                                </option>
-                                <option value="waka sarpras" {{ old('role') == 'waka sarpras' ? 'selected' : '' }}>
-                                    Waka Sarpras
-                                </option>
-                                <option value="waka hubin" {{ old('role') == 'waka hubin' ? 'selected' : '' }}>
-                                    Waka Hubin
-                                </option>
-                                <option value="waka kesiswaan" {{ old('role') == 'waka kesiswaan' ? 'selected' : '' }}>
-                                    Waka Kesiswaan
-                                </option>
-                                <option value="waka evbank" {{ old('role') == 'waka evbank' ? 'selected' : '' }}>
-                                    Waka Evbank
-                                </option>
-                                <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>
-                                    Admin
-                                </option>
+                            <select id="role" name="role" class="form-control border-0" style="background-color: #ededed" required>
+                                <option value="" disabled {{ old('jurusan') ? '' : 'selected' }}>Pilih Role</option>
+                                @foreach ($jurusan as $item)
+                                    <option value="{{ $item->jurusan }}" {{ old('jurusan') == $item->id ? 'selected' : '' }}>
+                                        {{ $item->jurusan }}
+                                    </option>
+                                @endforeach
                             </select>
-                            @error('role')
+                            @error('jurusan')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
-
-                        </div>
+                        </div>                        
                         <div class="mt-3 col-12">
                             <label for="password" class="form-label">Password</label>
                             <input type="password" id="password" name="password" class="form-control border-0"

@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Format;
 use App\Models\Upload;
 use App\Models\Uploadpengambilan;
+use Dotenv\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
 
 class UploadController extends Controller
 {
@@ -51,39 +53,29 @@ class UploadController extends Controller
     public function uploadFilePengambilan(Request $request)
     {
         // Validasi input file
-        $request->validate([
-            'upload_pengambilan_file' => 'required|max:10240', // maksimal 10MB
+        $validated = $request->validate([
+            'upload_pengambilan_file' => 'required',  // validasi file
+            'pengajuan_id' => 'required',  // validasi pengajuan_id
         ]);
 
-        $user = Auth::user(); // Ambil data user yang sedang login
+        // Ambil file yang diupload
+        $file = $validated['upload_pengambilan_file'];
 
-        // Hapus data lama yang memiliki user_id yang sama
-        $existingUploads = Uploadpengambilan::where('user_id', $user->id)->get();
-        foreach ($existingUploads as $upload) {
-            // Hapus file lama dari folder public/upload jika ada
-            if (file_exists(public_path($upload->upload_pengambilan_file))) {
-                unlink(public_path($upload->upload_pengambilan_file));
-            }
-            $upload->delete(); // Hapus data dari database
-        }
+        // Tentukan path di public/upload menggunakan public_path
+        $uploadPath = public_path('upload');  // Menentukan folder tujuan di dalam public
+        $fileName = $file->getClientOriginalName(); // Ambil nama asli file
+        $file->move($uploadPath, $fileName); // Pindahkan file ke folder yang ditentukan
 
-        // Ambil file dari request
-        $ajuanFile = $request->file('upload_pengambilan_file');
-
-        // Tentukan nama file dan lokasi penyimpanan
-        $ajuanFileName = time() . '-pengambilan-' . $ajuanFile->getClientOriginalName();
-
-        // Simpan file ke folder public/upload
-        $ajuanFile->move(public_path('upload'), $ajuanFileName);
-
-        // Simpan path file ke database
-        Uploadpengambilan::create([
-            'upload_pengambilan_file' => 'upload/' . $ajuanFileName,
-            'user_id' => $user->id,
+        // Simpan data ke tabel 'uploadpengambilans'
+        $uploadPengambilan = UploadPengambilan::create([
+            'upload_pengambilan_file' => 'upload/' . $fileName,  // Menyimpan path relatif
+            'pengajuan_id' => $validated['pengajuan_id'],
         ]);
 
-        return redirect()->route('pengambilan')->with('notif', 'File pengambilan berhasil diupload.');
+        // Redirect ke route tertentu (misalnya, ke halaman yang menampilkan daftar pengambilan)
+        return redirect()->route('pengambilan')->with('notif', 'File pengambilan berhasil di upload.');
     }
+    
 
 
     public function downloadPengajuan(Request $request)
@@ -106,23 +98,24 @@ class UploadController extends Controller
         return response()->download($filePath);
     }
 
-    public function downloadPengambilan(Request $request)
+    public function downloadPengambilan(Request $request, $id)
     {
-        $user = Auth::user(); // Ambil data user yang sedang login
+        $uploadPengambilan = UploadPengambilan::find($id); // Gunakan find() agar tidak muncul 404
 
-        // Cari file berdasarkan user_id
-        $format = Uploadpengambilan::where('user_id', $user->id)->latest()->first();
-
-        if (!$format || !$format->upload_pengambilan_file) {
-            return redirect()->back()->with('error', 'File pengambilan tidak ditemukan.');
+        if (!$uploadPengambilan) {
+            // Jika data tidak ditemukan, beri notifikasi bahwa data tidak ada
+            return redirect()->back()->with('error', 'Data tidak ditemukan atau file belum diupload oleh user.');
         }
 
-        $filePath = public_path($format->upload_pengambilan_file);
-
-        if (!file_exists($filePath)) {
-            return redirect()->back()->with('error', 'File tidak ditemukan.');
+        // Cek apakah file ada di folder public
+        $filePath = public_path($uploadPengambilan->upload_pengambilan_file);
+        
+        if (empty($uploadPengambilan->upload_pengambilan_file) || !file_exists($filePath)) {
+            // Jika file belum ada atau kosong, beri errorikasi bahwa file belum diupload
+            return redirect()->back()->with('error', 'File belum diupload oleh user.');
         }
 
-        return response()->download($filePath);
+        // Jika file ditemukan, lakukan download
+        return Response::download($filePath);
     }
 }

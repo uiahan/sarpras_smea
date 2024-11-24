@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use App\Models\Detail;
 use App\Models\Format;
+use App\Models\FormatPengajuan;
+use App\Models\FormatPengambilan;
 use App\Models\Jurusan;
 use App\Models\Pengajuan;
 use App\Models\SumberDana;
@@ -65,7 +67,6 @@ class DatabaseSeeder extends Seeder
             'username' => 'rpl',
             'foto' => 'img/profile.jpg',
             'role' => 'Rekayasa Perangkat Lunak',
-            'anggaran' => 1000000,
             'password' => bcrypt('rpl')
         ]);
 
@@ -134,6 +135,31 @@ class DatabaseSeeder extends Seeder
             'user_id' => '1'
         ]);
 
+        Jurusan::create([
+            'jurusan' => 'waka kurikulum',
+            'user_id' => '1'
+        ]);
+
+        Jurusan::create([
+            'jurusan' => 'waka sarpras',
+            'user_id' => '1'
+        ]);
+
+        Jurusan::create([
+            'jurusan' => 'waka hubin',
+            'user_id' => '1'
+        ]);
+
+        Jurusan::create([
+            'jurusan' => 'waka kesiswaan',
+            'user_id' => '1'
+        ]);
+
+        Jurusan::create([
+            'jurusan' => 'waka evbank',
+            'user_id' => '1'
+        ]);
+
         SumberDana::create([
             'sumber_dana' => 'BOS',
             'user_id' => '1'
@@ -149,25 +175,20 @@ class DatabaseSeeder extends Seeder
             'user_id' => '1'
         ]);
 
-        Pengajuan::create([
-            'user_id' => '6',
-            'jurusan' => 'Rekayasa Perangkat Lunak',
-            'barang' => 'WIFI',
-            'program_kegiatan' => 'Mempercepat internet sekolah',
-            'tahun' => '2024',
-            'tanggal_ajuan' => '2024-11-23',
-            'harga_satuan' => '750000',
-            'banyak' => '1',
-            'total_harga' => '750000',
-            'sumber_dana' => 'BOS',
-            'keterangan' => 'Wifi  starlink',
-            'status' => 'Diajukan',
-        ]);
-        
         Format::create([
             'format_pengajuan_file' => 'document/format_pengajuan.docx',
             'format_pengambilan_file' => 'document/format_pengambilan.docx',
             'user_id' => 1,
-        ]); 
+        ]);
+
+        FormatPengajuan::create([
+            'format_pengajuan_file' => 'document/format_pengajuan.docx',
+            'user_id' => 1,
+        ]);
+
+        FormatPengambilan::create([
+            'format_pengambilan_file' => 'document/format_pengambilan.docx',
+            'user_id' => 1,
+        ]);
     }
 }

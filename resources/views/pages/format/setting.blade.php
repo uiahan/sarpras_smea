@@ -18,46 +18,52 @@
             <div class="card border-0 mt-4 p-4 shadow">
                 <h4 class=" text-secondary">Data Format File</h4>
                 <hr>
-                <form action="{{ route('uploadFormat') }}" method="POST" enctype="multipart/form-data" class="form-group">
-                    @csrf
-                    <div class="row">
-                        <!-- Input untuk format pengajuan file -->
+                <div class="row">
+                    <form action="{{ route('uploadFormatPengajuan') }}" method="POST" enctype="multipart/form-data" class="form-group">
+                        @csrf
                         <div class="col-12">
                             <div>
                                 <label for="format_pengajuan_file" class="form-label">Upload Format Ajuan</label>
                                 <input type="file" id="format_pengajuan_file" name="format_pengajuan_file"
                                     class="form-control border-0" style="background-color: #ededed" required>
-                                <a href="{{ route('download.pengajuan') }}" class="btn mt-3 btn-sm"
+                                <input type="text" readonly value="{{ $pengajuan->format_pengajuan_file }}"
+                                    class="form-control border-0 mt-3" style="background-color: #ededed">
+                                <button type="submit" class="btn mt-3 btn-sm"
+                                    style="background-color: #ededed; padding: 6px 12px; font-size: 12px; border-radius: 4px;">
+                                    Upload
+                                </button>
+                                <a href="{{ route('downloadFormatPengajuan') }}" class="btn mt-3 btn-sm"
                                     style="background-color: #ededed; padding: 6px 12px; font-size: 12px; border-radius: 4px;">
                                     Download
                                 </a>
                             </div>
                         </div>
-
-                        <!-- Input untuk format pengambilan file -->
+                    </form>
+                    <hr class="mt-3">
+                    <form action="{{ route('uploadFormatPengambilan') }}" method="POST" enctype="multipart/form-data" class="form-group">
+                        @csrf
                         <div class="col-12 mt-3">
                             <div>
                                 <label for="format_pengambilan_file" class="form-label">Upload Format Pengambilan
                                     Barang</label>
                                 <input type="file" id="format_pengambilan_file" name="format_pengambilan_file"
                                     class="form-control border-0" style="background-color: #ededed" required>
-                                <a href="{{ route('download.pengambilan') }}"
-                                    class="btn btn-sm mt-3"
+                                    @foreach ($pengambilan as $item)
+                                    <input type="text" readonly value="{{ $item->format_pengambilan_file }}"
+                                    class="form-control border-0 mt-3" style="background-color: #ededed">
+                                    @endforeach
+                                <button type="submit" class="btn btn-sm mt-3"
+                                    style="background-color: #ededed; padding: 6px 12px; font-size: 12px; border-radius: 4px;">
+                                    Upload
+                                </button>
+                                <a href="{{ route('downloadFormatPengambilan') }}" class="btn btn-sm mt-3"
                                     style="background-color: #ededed; padding: 6px 12px; font-size: 12px; border-radius: 4px;">
                                     Download
                                 </a>
-
                             </div>
                         </div>
-
-                        <!-- Tombol submit -->
-                        <div class="col-12 mt-4">
-                            <button type="submit" class="btn text-white btn-merah" style="background-color: #d9261c">
-                                Upload Format File
-                            </button>
-                        </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

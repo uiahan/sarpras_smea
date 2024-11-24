@@ -49,6 +49,31 @@
             @endif
         });
 
+        $(document).ready(function() {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": true,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "200", // Waktu muncul lebih cepat
+                "hideDuration": "500", // Waktu hilang lebih cepat
+                "timeOut": "3000", // Durasi waktu tampilan notifikasi (3000ms = 3 detik)
+                "extendedTimeOut": "1000", // Durasi waktu saat mouse hover (1000ms = 1 detik)
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+
+            };
+
+            @if (session('error'))
+                toastr.error("{{ session('error') }}"); // Menampilkan notifikasi error
+            @endif
+        });
+
 
         document.addEventListener('DOMContentLoaded', function() {
 
@@ -85,6 +110,13 @@
             padding: 15px 20px;
             margin: 10px;
             transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .toast.toast-error {
+            background-color: #dc3545 !important;
+            /* Warna merah */
+            color: white !important;
+            /* Teks berwarna putih */
         }
 
         .toast:hover {

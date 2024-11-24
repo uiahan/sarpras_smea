@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Format;
+use App\Models\FormatPengajuan;
+use App\Models\FormatPengambilan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,83 +13,130 @@ class FormatController extends Controller
     public function setting()
     {
         $user = Auth::user();
-        return view('pages.format.setting', compact('user'));
+        $pengajuan = FormatPengajuan::first();
+        $pengambilan = FormatPengambilan::all();
+        return view('pages.format.setting', compact('user', 'pengambilan', 'pengajuan'));
     }
 
-    public function uploadFormat(Request $request)
-    {
-        // Validasi input file
-        $request->validate([
-            'format_pengajuan_file' => 'required|max:10240', // maksimal 10MB
-            'format_pengambilan_file' => 'required|max:10240', // maksimal 10MB
-        ]);
+    public function uploadFormatPengajuan(Request $request)
+{
+    // Validasi input file
+    $request->validate([
+        'format_pengajuan_file' => 'required', // Maksimal 10MB
+    ]);
 
-        // Hapus semua data lama dari tabel formats
-        Format::truncate();
+    $user = Auth::user(); // Ambil data user yang sedang login
 
-        // Ambil file dari request
-        $ajuanFile = $request->file('format_pengajuan_file');
-        $pengambilanFile = $request->file('format_pengambilan_file');
-
-        // Tentukan nama file dan lokasi penyimpanan
-        $ajuanFileName = time() . '-ajuan-' . $ajuanFile->getClientOriginalName();
-        $pengambilanFileName = time() . '-pengambilan-' . $pengambilanFile->getClientOriginalName();
-
-        // Simpan file ke folder public/document
-        $ajuanFile->move(public_path('document'), $ajuanFileName);
-        $pengambilanFile->move(public_path('document'), $pengambilanFileName);
-
-        $user = Auth::user();
-        // Simpan path file ke database
-        Format::create([
-            'format_pengajuan_file' => 'document/' . $ajuanFileName,
-            'format_pengambilan_file' => 'document/' . $pengambilanFileName,
-            'user_id' => $user->id,
-        ]);
-
-        return redirect()->back()->with('notif', 'Format file berhasil diupload.');
+    // Hapus data lama yang memiliki user_id yang sama
+    $existingUploads = FormatPengajuan::where('user_id', $user->id)->get();
+    foreach ($existingUploads as $upload) {
+        // Hapus file lama dari folder public/document jika ada
+        $filePath = public_path($upload->format_pengajuan_file);
+        if (is_file($filePath)) { // Pastikan path adalah file
+            unlink($filePath);
+        }
+        $upload->delete(); // Hapus data dari database
     }
 
-    public function downloadPengajuan()
+    // Ambil file dari request
+    $ajuanFile = $request->file('format_pengajuan_file');
+
+    // Tentukan nama file dan lokasi penyimpanan
+    $ajuanFileName = time() . '-ajuan-' . $ajuanFile->getClientOriginalName();
+
+    // Simpan file ke folder public/document
+    $ajuanFile->move(public_path('document'), $ajuanFileName);
+
+    // Simpan path file ke database
+    FormatPengajuan::create([
+        'format_pengajuan_file' => 'document/' . $ajuanFileName,
+        'user_id' => $user->id,
+    ]);
+
+    return redirect()->route('setting')->with('notif', 'Format pengajuan berhasil diupload.');
+}
+
+
+public function uploadFormatPengambilan(Request $request)
+{
+    // Validasi input file
+    $request->validate([
+        'format_pengambilan_file' => 'required', // Maksimal 10MB
+    ]);
+
+    $user = Auth::user(); // Ambil data user yang sedang login
+
+    // Hapus data lama yang memiliki user_id yang sama
+    $existingUploads = FormatPengambilan::where('user_id', $user->id)->get();
+    foreach ($existingUploads as $upload) {
+        // Hapus file lama dari folder public/document jika ada
+        $filePath = public_path($upload->format_pengambilan_file);
+        if (is_file($filePath)) { // Pastikan path adalah file
+            unlink($filePath);
+        }
+        $upload->delete(); // Hapus data dari database
+    }
+
+    // Ambil file dari request
+    $ajuanFile = $request->file('format_pengambilan_file');
+
+    // Tentukan nama file dan lokasi penyimpanan
+    $ajuanFileName = time() . '-pengambilan-' . $ajuanFile->getClientOriginalName();
+
+    // Simpan file ke folder public/document
+    $ajuanFile->move(public_path('document'), $ajuanFileName);
+
+    // Simpan path file ke database
+    FormatPengambilan::create([
+        'format_pengambilan_file' => 'document/' . $ajuanFileName,
+        'user_id' => $user->id,
+    ]);
+
+    return redirect()->route('setting')->with('notif', 'Format pengajuan berhasil diupload.');
+}
+
+    public function downloadFormatPengajuan(Request $request)
     {
-        // Cari data format file di database
-      
-
-        // Cari file berdasarkan user_id
-        $format = Format::where('user_id', 1)->latest()->first();
-
+        // Ganti '1' dengan user_id dari user yang sedang login jika diperlukan
+        $format = FormatPengajuan::where('user_id', 1)->first();
+    
+        // Periksa apakah format ditemukan
         if (!$format || !$format->format_pengajuan_file) {
             return redirect()->back()->with('error', 'File pengajuan tidak ditemukan.');
         }
-
+    
+        // Tentukan path file
         $filePath = public_path($format->format_pengajuan_file);
-
+    
+        // Periksa apakah file ada
         if (!file_exists($filePath)) {
             return redirect()->back()->with('error', 'File tidak ditemukan.');
         }
-
+    
+        // Download file
         return response()->download($filePath);
     }
+    
 
-    // Fungsi untuk download format pengambilan
-    public function downloadPengambilan()
+    public function downloadFormatPengambilan(Request $request)
     {
-        // Cari data format file di database
-      
-
-        // Cari file berdasarkan user_id
-        $format = Format::where('user_id', 1)->latest()->first();
-
+        // Ganti '1' dengan user_id dari user yang sedang login jika diperlukan
+        $format = FormatPengambilan::where('user_id', 1)->first();
+    
+        // Periksa apakah format ditemukan
         if (!$format || !$format->format_pengambilan_file) {
             return redirect()->back()->with('error', 'File pengambilan tidak ditemukan.');
         }
-
+    
+        // Tentukan path file
         $filePath = public_path($format->format_pengambilan_file);
-
+    
+        // Periksa apakah file ada
         if (!file_exists($filePath)) {
             return redirect()->back()->with('error', 'File tidak ditemukan.');
         }
-
+    
+        // Download file
         return response()->download($filePath);
     }
 }

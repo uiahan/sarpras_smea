@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Jurusan;
 use App\Models\Pengajuan;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -13,6 +14,7 @@ class AnggaranController extends Controller
     public function dashboard(Request $request)
     {
         $user = Auth::user();
+        $jurusan = Jurusan::all();
     
         // Ambil parameter role dari request untuk filter
         $roleFilter = $request->input('role');
@@ -62,7 +64,7 @@ class AnggaranController extends Controller
         });
     
         // Kirim data ke view
-        return view('pages.dashboard.dashboard', compact('userr', 'user', 'userCount', 'totalAnggaran', 'totalPengajuan', 'sisaAnggaran'));
+        return view('pages.dashboard.dashboard', compact('userr', 'user', 'userCount', 'totalAnggaran', 'totalPengajuan', 'sisaAnggaran', 'jurusan'));
     }
     
     

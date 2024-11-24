@@ -77,43 +77,12 @@
                                 <label for="role">Role</label>
                                 <select name="role" id="role" class="form-control border-0"
                                     style="background-color: #ededed">
-                                    <option value="Rekayasa Perangkat Lunak"
-                                        {{ request('role') == 'Rekayasa Perangkat Lunak' ? 'selected' : '' }}>
-                                        Rekayasa Perangkat Lunak
+                                    <option value="" disabled {{ old('jurusan') ? '' : 'selected' }}>Pilih Role</option>
+                                @foreach ($jurusan as $item)
+                                    <option value="{{ $item->jurusan }}" {{ old('jurusan') == $item->id ? 'selected' : '' }}>
+                                        {{ $item->jurusan }}
                                     </option>
-                                    <option value="Teknik Jaringan Komputer"
-                                        {{ request('role') == 'Teknik Jaringan Komputer' ? 'selected' : '' }}>
-                                        Teknik Jaringan Komputer
-                                    </option>
-                                    <option value="Otomatisasi Tata Kelola Perkantoran"
-                                        {{ request('role') == 'Otomatisasi Tata Kelola Perkantoran' ? 'selected' : '' }}>
-                                        Otomatisasi Tata Kelola Perkantoran
-                                    </option>
-                                    <option value="Bisnis Daring Pemasaran"
-                                        {{ request('role') == 'Bisnis Daring Pemasaran' ? 'selected' : '' }}>
-                                        Bisnis Daring Pemasaran
-                                    </option>
-                                    <option value="Akutansi Keuangan Lembaga"
-                                        {{ request('role') == 'Akutansi Keuangan Lembaga' ? 'selected' : '' }}>
-                                        Akutansi Keuangan Lembaga
-                                    </option>
-                                    <option value="waka kurikulum"
-                                        {{ request('role') == 'waka kurikulum' ? 'selected' : '' }}>
-                                        Waka Kurikulum
-                                    </option>
-                                    <option value="waka sarpras" {{ request('role') == 'waka sarpras' ? 'selected' : '' }}>
-                                        Waka Sarpras
-                                    </option>
-                                    <option value="waka hubin" {{ request('role') == 'waka hubin' ? 'selected' : '' }}>
-                                        Waka Hubin
-                                    </option>
-                                    <option value="waka kesiswaan"
-                                        {{ request('role') == 'waka kesiswaan' ? 'selected' : '' }}>
-                                        Waka Kesiswaan
-                                    </option>
-                                    <option value="waka evbank" {{ request('role') == 'waka evbank' ? 'selected' : '' }}>
-                                        Waka Evbank
-                                    </option>
+                                @endforeach
                                 </select>
                             </div>
                             <div class="col-xl-4 col-12 d-flex align-items-end mt-xl-0 mt-3">

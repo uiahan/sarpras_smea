@@ -14,7 +14,7 @@ class PengambilanController extends Controller
     {
         $user = Auth::user();
         $query = Pengajuan::query();
-        $role = auth()->user()->role;
+        $role = $user->role;
 
         $rolesWithAccessToAllJurusan = [
             'admin'
@@ -25,10 +25,14 @@ class PengambilanController extends Controller
             $query->where('jurusan', $role);
         }
 
-        // Filter berdasarkan tanggal
-        if ($request->has('tanggal_awal') && $request->has('tanggal_akhir')) {
-            $tanggal_awal = Carbon::parse($request->input('tanggal_awal'))->startOfDay();
-            $tanggal_akhir = Carbon::parse($request->input('tanggal_akhir'))->endOfDay();
+        // Filter berdasarkan tanggal (opsional)
+        if ($request->filled('tanggal_awal') || $request->filled('tanggal_akhir')) {
+            $tanggal_awal = $request->filled('tanggal_awal')
+                ? Carbon::parse($request->input('tanggal_awal'))->startOfDay()
+                : Carbon::create(1970, 1, 1, 0, 0, 0); // Waktu paling awal
+            $tanggal_akhir = $request->filled('tanggal_akhir')
+                ? Carbon::parse($request->input('tanggal_akhir'))->endOfDay()
+                : Carbon::create(9999, 12, 31, 23, 59, 59); // Waktu paling akhir
 
             $query->whereBetween('tanggal_ajuan', [$tanggal_awal, $tanggal_akhir]);
         }
@@ -49,10 +53,11 @@ class PengambilanController extends Controller
         return view('pages.pengambilan.pengambilan', compact('pengajuanCount', 'pengajuan', 'user', 'filters'));
     }
 
-    public function uploadPengambilan()
+    public function uploadPengambilan($id)
     {
+        $pengajuan = Pengajuan::findOrFail($id);
         $user = Auth::user();
-        return view('pages.pengambilan.upload', compact('user'));
+        return view('pages.pengambilan.upload', compact('user', 'pengajuan'));
     }
 
     public function ubahStatus(Request $request, $id)

@@ -19,14 +19,19 @@
                 <h4 class=" text-secondary">Data Anggaran {{ $userr->name }}</h4>
                 <hr>
                 <form action="{{ route('postTambahAnggaran', $userr->id) }}" method="POST" enctype="multipart/form-data"
-                    class="form-group">
+                    onsubmit="sanitizeAnggaran()" class="form-group">
                     @csrf
                     <div class="row">
                         <div class="col-12">
                             <div>
                                 <label for="anggaran" class="form-label">Jumlah Anggaran</label>
-                                <input type="number" min="0" id="anggaran" name="anggaran" class="form-control border-0"
-                                    style="background-color: #ededed" value="{{ $userr->anggaran }}" placeholder="masukan jumlah anggaran" required>
+                                <input type="number" id="anggaran" name="anggaran" class="form-control border-0"
+                                    style="background-color: #ededed" placeholder="Masukkan jumlah anggaran" required
+                                    oninput="updateFormattedAnggaran()">
+
+                                <!-- Display formatted Rupiah value below the input -->
+                                <div id="formattedAnggaran" style="margin-top: 5px; color: #888;"></div>
+
                             </div>
                         </div>
                         <div>
@@ -55,6 +60,25 @@
         new DataTable('#example');
 
         console.log("Session Notification: {{ session('notif') }}");
+
+        // Fungsi untuk memformat angka dengan pemisah ribuan
+        function updateFormattedAnggaran() {
+            const input = document.getElementById('anggaran');
+            const value = input.value.replace(/[^\d]/g, ''); // Hapus karakter selain angka
+
+            // Format angka dengan pemisah ribuan (titik)
+            const formattedValue = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+            // Tampilkan angka terformat di bawah input
+            document.getElementById('formattedAnggaran').textContent = 'Rp ' + formattedValue;
+        }
+
+        // Fungsi untuk membersihkan input sebelum disubmit (menghapus pemisah ribuan)
+        function sanitizeAnggaran() {
+            const anggaran = document.getElementById('anggaran');
+            // Hapus titik dari input sebelum mengirim ke server
+            anggaran.value = anggaran.value.replace(/[^\d]/g, '');
+        }
 
         document.addEventListener("DOMContentLoaded", function() {
             const hargaSatuan = document.getElementById('harga_satuan');

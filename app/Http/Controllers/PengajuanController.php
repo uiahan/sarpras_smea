@@ -6,6 +6,7 @@ use App\Models\Format;
 use App\Models\Jurusan;
 use App\Models\Pengajuan;
 use App\Models\SumberDana;
+use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -17,32 +18,35 @@ class PengajuanController extends Controller
     {
         $query = Pengajuan::query();
         $user = Auth::user();
+        $jurusan = Jurusan::all();
         $format = Format::all();
         $role = $user->role;
 
-        $rolesWithAccessToAllJurusan = [
-            'admin'
-        ];
+        $rolesWithAccessToAllJurusan = ['admin'];
 
         // Filter data berdasarkan jurusan jika bukan role dengan akses penuh
         if (!in_array($role, $rolesWithAccessToAllJurusan)) {
             $query->where('jurusan', $role);
         }
 
-        // Filter berdasarkan role untuk admin
+        // Filter untuk admin berdasarkan role (jurusan)
         if ($role == 'admin' && $request->filled('role')) {
             $query->where('jurusan', $request->input('role'));
         }
 
-        // Filter berdasarkan tanggal
-        if ($request->has('tanggal_awal') && $request->has('tanggal_akhir')) {
-            $tanggal_awal = Carbon::parse($request->input('tanggal_awal'))->startOfDay();
-            $tanggal_akhir = Carbon::parse($request->input('tanggal_akhir'))->endOfDay();
+        // Filter berdasarkan tanggal (opsional)
+        if ($request->filled('tanggal_awal') || $request->filled('tanggal_akhir')) {
+            $tanggal_awal = $request->filled('tanggal_awal')
+                ? Carbon::parse($request->input('tanggal_awal'))->startOfDay()
+                : Carbon::create(1970, 1, 1, 0, 0, 0); // Waktu paling awal
+            $tanggal_akhir = $request->filled('tanggal_akhir')
+                ? Carbon::parse($request->input('tanggal_akhir'))->endOfDay()
+                : Carbon::create(9999, 12, 31, 23, 59, 59); // Waktu paling akhir
 
             $query->whereBetween('tanggal_ajuan', [$tanggal_awal, $tanggal_akhir]);
         }
 
-        // Filter berdasarkan status
+        // Filter berdasarkan status (opsional)
         if ($request->filled('status')) {
             $query->where('status', $request->input('status'));
         }
@@ -57,7 +61,7 @@ class PengajuanController extends Controller
         // Simpan filter yang digunakan
         $filters = $request->only(['tanggal_awal', 'tanggal_akhir', 'status', 'role']);
 
-        return view('pages.pengajuan.pengajuan', compact('pengajuan', 'pengajuanCount', 'user', 'filters', 'format'));
+        return view('pages.pengajuan.pengajuan', compact('pengajuan', 'pengajuanCount', 'user', 'filters', 'format', 'jurusan'));
     }
 
     public function tambahPengajuan()
@@ -101,10 +105,26 @@ class PengajuanController extends Controller
             'keterangan' => 'nullable|string',
             'status' => 'required|in:Diajukan,Diterima,Diperbaiki,Dibelikan,Di Sarpras,Dijurusan',
         ]);
-
+    
         $validated['total_harga'] = $validated['harga_satuan'] * $validated['banyak'];
+    
+        // Cek apakah yang login adalah admin
+        if (auth()->user()->role === 'admin') {
+            // Jika admin, cari user dengan role yang sama dengan jurusan
+            $user = User::where('role', $validated['jurusan'])->first();
+            $user_id = $user ? $user->id : null;
+        } else {
+            // Jika bukan admin, gunakan user_id yang sedang login
+            $user_id = auth()->id();
+        }
+    
+        // Pastikan user_id valid sebelum melakukan penyimpanan
+        if (!$user_id) {
+            return redirect()->back()->with('error', 'belum ada user dengan jurusan yang dipilih, tambah user terlebih dahulu!');
+        }
+    
         Pengajuan::create([
-            'user_id' => auth()->id(),
+            'user_id' => $user_id,
             'jurusan' => $validated['jurusan'],
             'barang' => $validated['barang'],
             'program_kegiatan' => $validated['program_kegiatan'],
@@ -113,15 +133,16 @@ class PengajuanController extends Controller
             'tanggal_realisasi' => $validated['tanggal_realisasi'] ?? null,
             'harga_satuan' => $validated['harga_satuan'],
             'banyak' => $validated['banyak'],
-            'harga_beli' => $validated['harga_beli'],
+            'harga_beli' => $validated['harga_beli'] ?? null,
             'total_harga' => $validated['total_harga'],
             'sumber_dana' => $validated['sumber_dana'],
             'keterangan' => $validated['keterangan'],
             'status' => $validated['status'],
         ]);
-
+    
         return redirect()->route('pengajuan')->with('notif', 'Pengajuan berhasil ditambahkan.');
     }
+    
 
     public function postEditPengajuan(Request $request, $id)
     {
@@ -151,7 +172,7 @@ class PengajuanController extends Controller
             'tanggal_realisasi' => $validated['tanggal_realisasi'] ?? null,
             'harga_satuan' => $validated['harga_satuan'],
             'banyak' => $validated['banyak'],
-            'harga_beli' => $validated['harga_beli'],
+            'harga_beli' => $validated['harga_beli'] ?? null,
             'total_harga' => $validated['total_harga'],
             'sumber_dana' => $validated['sumber_dana'],
             'keterangan' => $validated['keterangan'],

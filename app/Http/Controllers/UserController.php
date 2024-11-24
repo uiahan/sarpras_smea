@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Jurusan;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,7 +23,8 @@ class UserController extends Controller
     public function tambahUser()
     {
         $user = Auth::user();
-        return view('pages.user.tambah', compact('user'));
+        $jurusan = Jurusan::all();
+        return view('pages.user.tambah', compact('user', 'jurusan'));
     }
 
     public function editUser($id)
@@ -45,7 +47,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'username' => 'required|string|unique:users,username|max:255',
             'password' => 'required|string|confirmed|min:8',
-            'role' => 'required|in:Akutansi Keuangan Lembaga,Bisnis Daring Pemasaran,Otomatisasi Tata Kelola Perkantoran,Teknik Jaringan Komputer,Rekayasa Perangkat Lunak,waka kurikulum,waka sarpras,waka hubin,waka kesiswaan,waka evbank,admin',
+            'role' => 'required',
             'foto' => 'nullable',
         ]);
 

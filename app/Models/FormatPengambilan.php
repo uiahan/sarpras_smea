@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Uploadpengambilan extends Model
+class FormatPengambilan extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
 
-    // Uploadpengambilan.php
-    public function Pengajuan()
+    // Upload.php
+    public function user()
     {
-        return $this->belongsTo(User::class, 'pengajuan_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

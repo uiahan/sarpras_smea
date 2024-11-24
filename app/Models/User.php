@@ -37,14 +37,18 @@ class User extends Authenticatable
         return $this->hasMany(Upload::class, 'user_id');
     }
 
-    public function uploadPengambilans()
-    {
-        return $this->hasMany(Uploadpengambilan::class, 'user_id');
-    }
-
     public function Format()
     {
         return $this->hasMany(Format::class, 'user_id');
+    }
+    public function FormatPengajuan()
+    {
+        return $this->hasMany(FormatPengajuan::class, 'user_id');
+    }
+
+    public function FormatPengambilan()
+    {
+        return $this->hasMany(FormatPengambilan::class, 'user_id');
     }
 
 

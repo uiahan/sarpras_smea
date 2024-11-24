@@ -41,7 +41,7 @@ Route::middleware('auth')->group(function () {
 
     //pengambilan
     Route::get('/pengambilan', [PengambilanController::class, 'pengambilan'])->name('pengambilan');
-    Route::get('/uploadPengambilan', [PengambilanController::class, 'uploadPengambilan'])->name('uploadPengambilan');
+    Route::get('/uploadPengambilan/{id}', [PengambilanController::class, 'uploadPengambilan'])->name('uploadPengambilan');
     Route::post('/ubahStatus/{id}', [PengambilanController::class, 'ubahStatus'])->name('ubahStatus');
 
     //validasi
@@ -77,13 +77,16 @@ Route::middleware('auth')->group(function () {
 
     //format
     Route::get('/setting', [FormatController::class, 'setting'])->name('setting');
-    Route::post('/uploadFormat', [FormatController::class, 'uploadFormat'])->name('uploadFormat');
+    Route::post('/uploadFormatPengajuan', [FormatController::class, 'uploadFormatPengajuan'])->name('uploadFormatPengajuan');
+    Route::post('/uploadFormatPengambilan', [FormatController::class, 'uploadFormatPengambilan'])->name('uploadFormatPengambilan');
+    Route::get('/downloadFormatPengajuan', [FormatController::class, 'downloadFormatPengajuan'])->name('downloadFormatPengajuan');
+    Route::get('/downloadFormatPengambilan', [FormatController::class, 'downloadFormatPengambilan'])->name('downloadFormatPengambilan');
 
     //upload
     Route::post('/uploadFile', [UploadController::class, 'uploadFile'])->name('uploadFile');
     Route::post('/uploadFilePengambilan', [UploadController::class, 'uploadFilePengambilan'])->name('uploadFilePengambilan');
     Route::get('/downloadPengajuan', [UploadController::class, 'downloadPengajuan'])->name('downloadPengajuan');
-    Route::get('/downloadPengambilan', [UploadController::class, 'downloadPengambilan'])->name('downloadPengambilan');
+    Route::get('/downloadPengambilan/{id}', [UploadController::class, 'downloadPengambilan'])->name('downloadPengambilan');
 
     //dokumen
     Route::get('/dokumen', [DokumenController::class, 'dokumen'])->name('dokumen');

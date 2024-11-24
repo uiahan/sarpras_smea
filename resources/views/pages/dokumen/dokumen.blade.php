@@ -29,19 +29,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-4 col-12">
-                    <div class="card w-100 card-nasabah count-card border-0 mt-4 shadow bg-warning">
-                        <div class="row px-3 py-4">
-                            <div class="col-7 text-white">
-                                <h5>Dokumen Pengambilan:</h5>
-                                <h1 class="px-3">{{ $pengambilanCount }}</h1>
-                            </div>
-                            <div class="col-5 d-flex align-items-center" style="height: 100%;">
-                                <i class='fa-solid fa-book nav_icon text-white' style="font-size: 5rem"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <div class="card border-0 mt-4 p-4 shadow">
@@ -91,63 +78,6 @@
                                     <td style="vertical-align: middle;">
                                         <div class="d-flex">
                                             <a href="{{ route('lihatPengajuan', $item->id) }}"
-                                                class="btn btn-primary ms-1" style="padding: 12px 15px;">
-                                                <i class="fa-solid fa-eye"></i>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="card border-0 mt-4 p-4 shadow">
-                <div class="row">
-                    <div class="col-md-4">
-                        <h4 class="me-auto text-secondary">Tabel Dokumen Pengambilan
-                    </div>
-                </div>
-                <hr>
-                <div class="table-responsive pb-2">
-                    <table class="table" id="example">
-                        <thead style="background-color: #f2f2f2">
-                            <tr>
-                                <th scope="col">No</th>
-                                <th scope="col">Foto</th>
-                                <th scope="col">Nama</th>
-                                <th scope="col">Username</th>
-                                <th scope="col">Role</th>
-                                <th scope="col">Dokumen</th>
-                                <th scope="col">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody style="background-color: #f2f2f2">
-                            @foreach ($userr as $item)
-                                <tr>
-                                    <td style="vertical-align: middle;" scope="row">{{ $loop->iteration }}</td>
-                                    <td style="vertical-align: middle;"><img src="{{ asset($item->foto) }}"
-                                            class=" rounded-circle" width="40" height="40" style="object-fit: cover"
-                                            alt=""></td>
-                                    <td style="vertical-align: middle;">{{ $item->name }}</td>
-                                    <td style="vertical-align: middle;">{{ $item->username }}</td>
-                                    <td style="vertical-align: middle;">{{ $item->role }}</td>
-                                    <td>
-                                        @if ($item->uploadPengambilans->isNotEmpty())
-                                            @foreach ($item->uploadPengambilans as $upload)
-                                                <p class="text-success">
-                                                    {{ \Illuminate\Support\Str::limit(basename($upload->upload_pengambilan_file), 30) }}
-                                                </p>
-                                            @endforeach
-                                        @else
-                                            <p class="text-danger">
-                                                Belum upload dokumen pengambilan
-                                            </p>
-                                        @endif
-                                    </td>
-                                    <td style="vertical-align: middle;">
-                                        <div class="d-flex">
-                                            <a href="{{ route('lihatPengambilan', $item->id) }}"
                                                 class="btn btn-primary ms-1" style="padding: 12px 15px;">
                                                 <i class="fa-solid fa-eye"></i>
                                             </a>

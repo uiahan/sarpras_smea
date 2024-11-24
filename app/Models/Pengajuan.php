@@ -25,4 +25,8 @@ class Pengajuan extends Model
     public function Detail() {
         return $this->hasMany(Detail::class);
     }
+
+    public function UploadPengambilan() {
+        return $this->hasMany(Uploadpengambilan::class);
+    }
 }

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('foto')->nullable();
             $table->string('name');
             $table->integer('anggaran')->nullable();
-            $table->enum('role', ['Akutansi Keuangan Lembaga', 'Bisnis Daring Pemasaran', 'Otomatisasi Tata Kelola Perkantoran', 'Teknik Jaringan Komputer', 'Rekayasa Perangkat Lunak', 'waka kurikulum', 'waka sarpras', 'waka hubin', 'waka kesiswaan', 'waka evbank', 'admin']);
+            $table->string('role');
             $table->string('username')->unique();
             $table->string('password');
             $table->rememberToken();

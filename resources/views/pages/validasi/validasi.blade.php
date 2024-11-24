@@ -38,12 +38,12 @@
                     <div class="row">
                         <div class="col-xl-6 col-12 mb-3">
                             <label for="tanggal_awal">Tanggal awal</label>
-                            <input type="date" required name="tanggal_awal" class="form-control border-0"
+                            <input type="date" name="tanggal_awal" class="form-control border-0"
                                 value="{{ $filters['tanggal_awal'] ?? '' }}" style="background-color: #ededed">
                         </div>
                         <div class="col-xl-6 col-12 mb-3">
                             <label for="tanggal_akhir">Tanggal akhir</label>
-                            <input type="date" required name="tanggal_akhir" class="form-control border-0"
+                            <input type="date" name="tanggal_akhir" class="form-control border-0"
                                 value="{{ $filters['tanggal_akhir'] ?? '' }}" style="background-color: #ededed">
                         </div>
                         <div class="col-xl-4 col-12 mt-xl-0">
@@ -68,24 +68,12 @@
                             <label for="jurusan">Jurusan</label>
                             <select name="jurusan" id="jurusan" class="form-control border-0"
                                 style="background-color: #ededed">
-                                <option value="Rekayasa Perangkat Lunak"
-                                    {{ request('jurusan') == 'Rekayasa Perangkat Lunak' ? 'selected' : '' }}>Rekayasa
-                                    Perangkat Lunak
-                                </option>
-                                <option value="Teknik Jaringan Komputer"
-                                    {{ request('jurusan') == 'Teknik Jaringan Komputer' ? 'selected' : '' }}>Teknik
-                                    Jaringan Komputer
-                                </option>
-                                <option value="Otomatisasi Tata Kelola Perkantoran"
-                                    {{ request('jurusan') == 'Otomatisasi Tata Kelola Perkantoran' ? 'selected' : '' }}>
-                                    Otomatisasi Tata Kelola Perkantoran</option>
-                                <option value="Bisnis Daring Pemasaran"
-                                    {{ request('jurusan') == 'Bisnis Daring Pemasaran' ? 'selected' : '' }}>Bisnis Daring
-                                    Pemasaran
-                                </option>
-                                <option value="Akutansi Keuangan Lembaga"
-                                    {{ request('jurusan') == 'Akutansi Keuangan Lembaga' ? 'selected' : '' }}>Akutansi
-                                    Keuangan Lembaga</option>
+                                <option value="" disabled {{ old('jurusan') ? '' : 'selected' }}>Pilih Jurusan</option>
+                                @foreach ($jurusan as $item)
+                                    <option value="{{ $item->jurusan }}" {{ old('jurusan') == $item->id ? 'selected' : '' }}>
+                                        {{ $item->jurusan }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="col-xl-4 col-12 d-flex align-items-end mt-xl-0 mt-3">
@@ -149,8 +137,8 @@
                                     </td>
                                     <td style="vertical-align: middle;">{{ $item->sumber_dana }}</td>
                                     <td style="vertical-align: middle;">{{ $item->keterangan }}</td>
-                                    <td style="vertical-align: middle;">@if ($item->harga_beli)
-                                        {{ number_format($item->catatan) }}
+                                    <td style="vertical-align: middle;">@if ($item->catatan)
+                                        {{ ($item->catatan) }}
                                     @else
                                         <span class="text-danger">Tidak Ada Catatan</span>
                                     @endif</td>
@@ -164,6 +152,10 @@
                                             <a href="{{ route('konfirmasi', $item->id) }}" class="btn btn-success ms-1"
                                                 style="padding: 12px 15px;">
                                                 <i class="fa-solid fa-pen"></i>
+                                            </a>
+                                            <a href="{{ route('downloadPengambilan', $item->id) }}" class="btn ms-1 btn-warning text-white"
+                                                style="padding: 12px 15px;">
+                                                <i class="fa-solid fa-download"></i>
                                             </a>
                                         </div>
                                     </td>
@@ -256,6 +248,13 @@
         -webkit-box-shadow: 0px 0px 5px 0px #edbb05;
         -moz-box-shadow: 0px 0px 5px 0px #edbb05;
         box-shadow: 0px 0px 5px 0px #edbb05;
+        Copy Text
+    }
+
+    .btn-warning {
+        -webkit-box-shadow: 0px 0px 5px 0px #ffc108;
+        -moz-box-shadow: 0px 0px 5px 0px #ffc108;
+        box-shadow: 0px 0px 5px 0px #ffc108;
         Copy Text
     }
 </style>

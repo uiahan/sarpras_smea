@@ -29,6 +29,14 @@
                                     placeholder="masukan file pengambilan" required>
                             </div>
                         </div>
+                        <div class="col-12">
+                            <div>
+                                <label for="pengajuan_id" class="form-label">File Pengambilan</label>
+                                <input type="text" id="pengajuan_id" name="pengajuan_id"
+                                    class="form-control border-0" style="background-color: #ededed"
+                                    placeholder="masukan file pengambilan" value="{{ $pengajuan->id }}" required>
+                            </div>
+                        </div>
                         <div>
                             <button type="submit" class="btn text-white mt-3 btn-kuning" style="background-color: #edbb05"
                                 onclick="confirmSubmit(event)">

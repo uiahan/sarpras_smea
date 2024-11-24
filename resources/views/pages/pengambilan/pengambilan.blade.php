@@ -33,59 +33,27 @@
                         <h4 class="me-auto text-secondary">Tabel Pengajuan</h4>
                     </div>
                     <div class="col-md-8 d-flex justify-content-end d-none d-xl-block">
-                        <div>
-                            <a href="{{ route('download.pengambilan') }}" class="btn rounded-4 text-white btn-kuning" style="background-color: #edbb05">
+                        <div class="d-flex justify-content-end">
+                            <a href="{{ route('download.pengambilan') }}" class="btn rounded-4 text-white btn-kuning"
+                                style="background-color: #edbb05">
                                 <i class="fa-solid fa-download"></i> Download format pengambilan
                             </a>
-                            <div class="btn-group">
-                                <button type="button" class="btn ms-2 rounded-4 text-white btn-kuning dropdown-toggle"
-                                        style="background-color: #edbb05" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-solid fa-upload"></i> Pengambilan
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a class="dropdown-item" href="{{ route('uploadPengambilan') }}">
-                                            <i class="fa-solid fa-upload"></i> Upload
-                                        </a>
-                                    </li>
-                                    <li class="mt-1">
-                                        <a class="dropdown-item" href="{{ route('downloadPengambilan') }}">
-                                            <i class="fa-solid fa-eye"></i> Lihat
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <a href="{{ route('pengajuan.downloadPDF') }}" class="btn ms-2 rounded-4 text-white btn-kuning" style="background-color: #edbb05">
+                            <a href="{{ route('pengajuan.downloadPDF') }}" class="btn ms-2 rounded-4 text-white btn-kuning"
+                                style="background-color: #edbb05">
                                 <i class="fa-solid fa-file-pdf"></i> Download PDF
-                            </a>     
+                            </a>
                         </div>
                     </div>
                     <div class="col-md-12 d-block d-xl-none">
                         <div>
-                            <a href="{{ route('download.pengambilan') }}" class="btn mt-3 w-100 rounded-4 text-white btn-kuning" style="background-color: #edbb05">
+                            <a href="{{ route('download.pengambilan') }}"
+                                class="btn mt-3 w-100 rounded-4 text-white btn-kuning" style="background-color: #edbb05">
                                 <i class="fa-solid fa-download"></i> Download format pengambilan
                             </a>
-                            <div class="btn-group w-100">
-                                <button type="button" class="btn mt-3 rounded-4 text-white btn-kuning dropdown-toggle"
-                                        style="background-color: #edbb05" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-solid fa-upload"></i> Pengambilan
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a class="dropdown-item" href="{{ route('uploadPengambilan') }}">
-                                            <i class="fa-solid fa-upload"></i> Upload
-                                        </a>
-                                    </li>
-                                    <li class="mt-1">
-                                        <a class="dropdown-item" href="{{ route('downloadPengambilan') }}">
-                                            <i class="fa-solid fa-eye"></i> Lihat
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <a href="{{ route('pengajuan.downloadPDF') }}" class="btn w-100 mt-3 rounded-4 text-white btn-kuning" style="background-color: #edbb05">
+                            <a href="{{ route('pengajuan.downloadPDF') }}"
+                                class="btn w-100 mt-3 rounded-4 text-white btn-kuning" style="background-color: #edbb05">
                                 <i class="fa-solid fa-file-pdf"></i> Download PDF
-                            </a>     
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -94,13 +62,13 @@
                     <div class="row">
                         <div class="col-xl-5 col-12">
                             <label for="tanggal_awal">Tanggal awal</label>
-                            <input type="date" required name="tanggal_awal" class="form-control border-0" value="{{ $filters['tanggal_awal'] ?? '' }}"
-                                style="background-color: #ededed">
+                            <input type="date" name="tanggal_awal" class="form-control border-0"
+                                value="{{ $filters['tanggal_awal'] ?? '' }}" style="background-color: #ededed">
                         </div>
                         <div class="col-xl-5 col-12">
                             <label for="tanggal_akhir">Tanggal akhir</label>
-                            <input type="date" required name="tanggal_akhir" class="form-control border-0" value="{{ $filters['tanggal_akhir'] ?? '' }}"
-                                style="background-color: #ededed">
+                            <input type="date" name="tanggal_akhir" class="form-control border-0"
+                                value="{{ $filters['tanggal_akhir'] ?? '' }}" style="background-color: #ededed">
                         </div>
                         <div class="col-xl-2 col-12 d-flex align-items-end mt-xl-0 mt-4">
                             <button type="submit" class="text-white btn-merah btn w-100 btn-tambah-nasabah"
@@ -145,18 +113,20 @@
                                         @else
                                             <span class="text-danger">Belum Ditentukan</span>
                                         @endif
-                                    </td>            
-                                    <td style="vertical-align: middle;">{{ number_format($item->harga_satuan, 0, ',', '.') }}</td>
+                                    </td>
+                                    <td style="vertical-align: middle;">
+                                        {{ number_format($item->harga_satuan, 0, ',', '.') }}</td>
                                     <td style="vertical-align: middle;">{{ $item->tahun }}</td>
                                     <td style="vertical-align: middle;">{{ $item->banyak }}</td>
-                                    <td style="vertical-align: middle;">{{ number_format($item->total_harga, 0, ',', '.') }}</td>
+                                    <td style="vertical-align: middle;">
+                                        {{ number_format($item->total_harga, 0, ',', '.') }}</td>
                                     <td style="vertical-align: middle;">
                                         @if ($item->harga_beli)
-                                        {{ number_format($item->harga_beli, 0, ',', '.') }}
+                                            {{ number_format($item->harga_beli, 0, ',', '.') }}
                                         @else
                                             <span class="text-danger">Belum Dimasukan</span>
                                         @endif
-                                    </td>       
+                                    </td>
                                     <td style="vertical-align: middle;">{{ $item->sumber_dana }}</td>
                                     <td style="vertical-align: middle;">{{ $item->keterangan }}</td>
                                     <td style="vertical-align: middle;">{{ $item->status }}</td>
@@ -178,6 +148,27 @@
                                                     <i class="fa-solid fa-check"></i>
                                                 </a>
                                             @endif
+                                            <div class="btn-group">
+                                                <button type="button"
+                                                    class="btn ms-1 text-white btn-kuning dropdown-toggle"
+                                                    style="background-color: #edbb05" data-bs-toggle="dropdown"
+                                                    aria-expanded="false">
+                                                    <i class="fa-solid fa-upload"></i>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li>
+                                                        <a class="dropdown-item" href="{{ route('uploadPengambilan', $item->id) }}">
+                                                            <i class="fa-solid fa-upload"></i> Upload
+                                                        </a>
+                                                    </li>
+                                                    <li class="mt-1">
+                                                        <a class="dropdown-item"
+                                                            href="{{ route('downloadPengambilan', $item->id) }}">
+                                                            <i class="fa-solid fa-eye"></i> Lihat
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </td>
                                 </tr>

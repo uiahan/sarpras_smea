@@ -18,7 +18,7 @@
             <div class="card border-0 mt-4 p-4 shadow">
                 <h4 class=" text-secondary">Data Pengajuan</h4>
                 <hr>
-                <form action="{{ route('postTambahPengajuan') }}" method="POST" enctype="multipart/form-data"
+                <form action="{{ route('postTambahPengajuan') }}" method="POST" enctype="multipart/form-data" onsubmit="formF()"
                     class="form-group">
                     @csrf
                     <div class="row">
@@ -35,9 +35,8 @@
                                 </select>
                             </div>
                         </div>
-                        @endif
-                        @if (in_array($user->role, ['Akutansi Keuangan Lembaga', 'Bisnis Daring Pemasaran', 'Otomatisasi Tata Kelola Perkantoran', 'Teknik Jaringan Komputer', 'Rekayasa Perangkat Lunak', 'waka kurikulum', 'waka sarpras', 'waka hubin', 'waka kesiswaan', 'waka evbank']))
-                        <div class="col-xl-6 col-12">
+                        @else
+                        <div class="col-xl-6 col-12" hidden>
                             <div>
                                 <label for="jurusan" class="form-label">Nama Jurusan / Role User</label>
                                 <input type="text" id="jurusan" name="jurusan" readonly value="{{ $user->role }}"
@@ -47,29 +46,19 @@
                         </div>
                         @endif
                         @if (in_array($user->role, ['admin']))
-                        <div class="col-xl-6 col-12 mt-3">
+                        <div class="col-xl-6 col-12 mt-3 mt-xl-0">
                             <div>
                                 <label for="status" class="form-label">Status</label>
                                 <input type="text" id="status" name="status" value="Diajukan" readonly
                                     class="form-control border-0" style="background-color: #ededed" required>
                             </div>
                         </div>
-                        @endif
-                        @if (in_array($user->role, ['Akutansi Keuangan Lembaga', 'Bisnis Daring Pemasaran', 'Otomatisasi Tata Kelola Perkantoran', 'Teknik Jaringan Komputer', 'Rekayasa Perangkat Lunak', 'waka kurikulum', 'waka sarpras', 'waka hubin', 'waka kesiswaan', 'waka evbank']))
+                        @else
                         <div class="col-xl-6 col-12 mt-3" hidden>
                             <div>
                                 <label for="status" class="form-label">Status</label>
                                 <input type="text" id="status" name="status" value="Diajukan" readonly
                                     class="form-control border-0" style="background-color: #ededed" required>
-                            </div>
-                        </div>
-                        @endif
-                        @if (in_array($user->role, ['Akutansi Keuangan Lembaga', 'Bisnis Daring Pemasaran', 'Otomatisasi Tata Kelola Perkantoran', 'Teknik Jaringan Komputer', 'Rekayasa Perangkat Lunak', 'waka kurikulum', 'waka sarpras', 'waka hubin', 'waka kesiswaan', 'waka evbank']))
-                        <div class="col-xl-6 col-12 mt-3 mt-xl-0">
-                            <div>
-                                <label for="barang" class="form-label">Nama Barang</label>
-                                <input type="text" id="barang" name="barang" class="form-control border-0"
-                                    style="background-color: #ededed" placeholder="masukan nama barang" required>
                             </div>
                         </div>
                         @endif
@@ -81,7 +70,16 @@
                                     style="background-color: #ededed" placeholder="masukan nama barang" required>
                             </div>
                         </div>
+                        @else
+                        <div class="col-xl-6 col-12">
+                            <div>
+                                <label for="barang" class="form-label">Nama Barang</label>
+                                <input type="text" id="barang" name="barang" class="form-control border-0"
+                                    style="background-color: #ededed" placeholder="masukan nama barang" required>
+                            </div>
+                        </div>
                         @endif
+                        @if ($user->role == 'admin')
                         <div class="col-xl-6 col-12 mt-3">
                             <div>
                                 <label for="program_kegiatan" class="form-label">Program Kegiatan</label>
@@ -90,6 +88,16 @@
                                     placeholder="masukan program kegiatan" required>
                             </div>
                         </div>
+                        @else
+                        <div class="col-xl-6 col-12 mt-3 mt-xl-0">
+                            <div>
+                                <label for="program_kegiatan" class="form-label">Program Kegiatan</label>
+                                <input type="text" id="program_kegiatan" name="program_kegiatan"
+                                    class="form-control border-0" style="background-color: #ededed"
+                                    placeholder="masukan program kegiatan" required>
+                            </div>
+                        </div>
+                        @endif
                         <div class="col-xl-6 col-12 mt-3">
                             <div>
                                 <label for="tahun" class="form-label">Tahun Pengajuan</label>
@@ -112,18 +120,23 @@
                         <div class="col-xl-6 col-12 mt-3">
                             <div>
                                 <label for="harga_satuan" class="form-label">Harga Satuan</label>
-                                <input type="number" id="harga_satuan" name="harga_satuan" class="form-control border-0"
-                                    style="background-color: #ededed" min="0" placeholder="masukan harga satuan"
-                                    required>
+                                <input type="text" id="harga_satuan" name="harga_satuan" class="form-control border-0"
+                                    style="background-color: #ededed" placeholder="Masukkan harga satuan"
+                                    oninput="updateFormatted('harga_satuan', 'formattedAnggaran')" required>
+                                <div id="formattedAnggaran" style="margin-top: 5px; color: #888;"></div>
                             </div>
                         </div>
+                        @if ($user->role == 'admin')    
                         <div class="col-xl-6 col-12 mt-3">
                             <div>
                                 <label for="harga_beli" class="form-label">Harga Beli</label>
-                                <input type="number" id="harga_beli" name="harga_beli" class="form-control border-0"
-                                    style="background-color: #ededed" min="0" placeholder="masukan harga beli (boleh dikosongkan dahulu)">
+                                <input type="text" id="harga_beli" name="harga_beli" class="form-control border-0"
+                                    style="background-color: #ededed" min="0" placeholder="Masukkan harga beli (boleh dikosongkan dahulu)"
+                                    oninput="updateFormatted('harga_beli', 'formattedHargaBeli')">
+                                <div id="formattedHargaBeli" style="margin-top: 5px; color: #888;"></div>
                             </div>
                         </div>
+                        @endif
                         <div class="col-xl-6 col-12 mt-3">
                             <div>
                                 <label for="banyak" class="form-label">Banyak Barang</label>
@@ -135,11 +148,12 @@
                         <div class="col-xl-6 col-12 mt-3">
                             <div>
                                 <label for="total_harga" class="form-label">Total Harga</label>
-                                <input type="number" id="total_harga" name="total_harga" readonly required
-                                    class="form-control border-0" style="background-color: #ededed"
-                                    placeholder="total harga otomatis muncul">
+                                <input type="text" id="total_harga" name="total_harga" class="form-control border-0"
+                                    style="background-color: #ededed" placeholder="Total harga otomatis muncul" readonly>
+                                <div id="formattedTotalHarga" style="margin-top: 5px; color: #888;"></div>
                             </div>
                         </div>
+                        
                         <div class="col-xl-6 col-12 mt-3">
                             <div>
                                 <label for="tanggal_ajuan" class="form-label">Tanggal Ajuan</label>
@@ -151,7 +165,7 @@
                         <div class="col-xl-6 col-12 mt-3">
                             <div>
                                 <label for="tanggal_realisasi" class="form-label">Tanggal Realisasi</label>
-                                <input type="date" id="tanggal_realisasi" required name="tanggal_realisasi"
+                                <input type="date" id="tanggal_realisasi" name="tanggal_realisasi"
                                     class="form-control border-0" style="background-color: #ededed">
                             </div>
                         </div>
@@ -189,6 +203,36 @@
 
         console.log("Session Notification: {{ session('notif') }}");
 
+     
+
+
+        function updateFormatted(inputId, formattedId) {
+            const input = document.getElementById(inputId);
+            const value = input.value.replace(/[^\d]/g, '');
+            const formattedValue = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            document.getElementById(formattedId).textContent = 'Rp ' + formattedValue;
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const hargaSatuan = document.getElementById('harga_satuan');
+            const banyakBarang = document.getElementById('banyak');
+            const totalHarga = document.getElementById('total_harga');
+            const formattedTotalHarga = document.getElementById('formattedTotalHarga');
+
+            function hitungTotalHarga() {
+                const harga = parseFloat(hargaSatuan.value.replace(/[^\d]/g, '')) || 0;
+                const banyak = parseFloat(banyakBarang.value) || 0;
+                const total = harga * banyak;
+                totalHarga.value = total;
+                formattedTotalHarga.textContent = 'Rp ' + total.toLocaleString('id-ID');
+            }
+
+            hargaSatuan.addEventListener('input', hitungTotalHarga);
+            banyakBarang.addEventListener('input', hitungTotalHarga);
+        });
+
+  
+
         document.addEventListener("DOMContentLoaded", function() {
             const hargaSatuan = document.getElementById('harga_satuan');
             const banyakBarang = document.getElementById('banyak');
@@ -206,25 +250,31 @@
         });
 
         function confirmSubmit(event) {
-        event.preventDefault();  // Mencegah form dikirim sebelum konfirmasi
+            event.preventDefault(); // Mencegah form dikirim langsung
 
-        // Menampilkan SweetAlert2
-        Swal.fire({
-            title: 'Apakah Anda yakin?',
-            text: "Pastikan data yang Anda kirim sudah benar.",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, kirim!',
-            cancelButtonText: 'Batal'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Jika pengguna mengonfirmasi, kirim form
-                event.target.form.submit(); // Mengirim form
+            const form = event.target.form; // Ambil elemen form
+            if (!form.checkValidity()) {
+                form.reportValidity(); // Menampilkan pesan validasi HTML
+                return; // Jika tidak valid, hentikan proses
             }
-        });
-    }
+
+            // Menampilkan SweetAlert2
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Pastikan data yang Anda kirim sudah benar.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, kirim!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit(); // Kirim form jika dikonfirmasi
+                }
+            });
+        }
+    
     </script>
 @endsection
 <style>
