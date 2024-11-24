@@ -29,7 +29,7 @@
                                     placeholder="masukan file pengambilan" required>
                             </div>
                         </div>
-                        <div class="col-12">
+                        <div class="col-12" hidden>
                             <div>
                                 <label for="pengajuan_id" class="form-label">File Pengambilan</label>
                                 <input type="text" id="pengajuan_id" name="pengajuan_id"
