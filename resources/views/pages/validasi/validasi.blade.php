@@ -50,6 +50,8 @@
                             <label for="status">Status</label>
                             <select name="status" id="status" class="form-control border-0"
                                 style="background-color: #ededed">
+                                <option value="" disabled {{ request('status') == '' ? 'selected' : '' }}>Pilih Status
+                                </option>
                                 <option value="Diajukan" {{ request('status') == 'Diajukan' ? 'selected' : '' }}>Diajukan
                                 </option>
                                 <option value="Diterima" {{ request('status') == 'Diterima' ? 'selected' : '' }}>Diterima
@@ -61,6 +63,8 @@
                                 <option value="Di Sarpras" {{ request('status') == 'Di Sarpras' ? 'selected' : '' }}>Di
                                     Sarpras</option>
                                 <option value="Dijurusan" {{ request('status') == 'Dijurusan' ? 'selected' : '' }}>Dijurusan
+                                </option>
+                                <option value="Rusak" {{ request('status') == 'Rusak' ? 'selected' : '' }}>Rusak
                                 </option>
                             </select>
                         </div>

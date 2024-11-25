@@ -70,9 +70,9 @@
                                                 style="padding: 12px 15px;">
                                                 <i class="fa-solid fa-pen-to-square"></i>
                                             </a>
-                                            <a href="#" class="btn text-white ms-1 btn-merah delete-btn"
+                                            <a href="{{ route('postHapusJurusan', $item->id) }}" class="btn text-white ms-1 btn-merah" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');"
                                                 style="padding: 12px 15px; background-color:#d9261c;"
-                                                data-url="{{ route('postHapusJurusan', $item->id) }}">
+                                                >
                                                 <i class="fa-solid fa-trash"></i>
                                             </a>
 
@@ -98,46 +98,41 @@
 
         console.log("Session Notification: {{ session('notif') }}");
 
-        document.querySelectorAll('.delete-btn').forEach(function(button) {
-            button.addEventListener('click', function(event) {
-                event.preventDefault(); // Mencegah default action (link follow)
+        $(document).on('click', '.delete-btn', function(event) {
+            event.preventDefault();
 
-                const url = button.getAttribute('data-url'); // Ambil URL dari atribut data-url
+            const url = $(this).data('url'); // Ambil URL dari atribut data-url
 
-                // Menampilkan SweetAlert konfirmasi
-                Swal.fire({
-                    title: 'Apakah Anda yakin?',
-                    text: 'Data detail ini akan dihapus!',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Ya, hapus!',
-                    cancelButtonText: 'Batal'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Jika tombol "Ya" diklik, kirim request POST ke URL yang diberikan
-                        fetch(url, {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'X-CSRF-TOKEN': '{{ csrf_token() }}' // CSRF token untuk Laravel
-                                },
-                                body: JSON
-                                .stringify({}) // Bisa ditambahkan data lain jika diperlukan
-                            })
-                            .then(response => response.json())
-                            .then(data => {
-                                Swal.fire('Terhapus!', 'Detail berhasil dihapus.', 'success');
-                                // Optionally, refresh halaman atau lakukan aksi lain setelah sukses
-                                location.reload();
-                            })
-                            .catch(error => {
-                                Swal.fire('Gagal!', 'Terjadi kesalahan saat menghapus.',
-                                    'error');
-                            });
-                    }
-                });
+            // Menampilkan SweetAlert konfirmasi
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: 'Data detail ini akan dihapus!',  
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Jika tombol "Ya" diklik, kirim request POST ke URL yang diberikan
+                    fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}' // CSRF token untuk Laravel
+                            },
+                            body: JSON.stringify({})
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            Swal.fire('Terhapus!', 'Detail berhasil dihapus.', 'success');
+                            $('#example').DataTable().ajax.reload(); // Reload DataTable
+                        })
+                        .catch(error => {
+                            Swal.fire('Gagal!', 'Terjadi kesalahan saat menghapus.', 'error');
+                        });
+                }
             });
         });
     </script>

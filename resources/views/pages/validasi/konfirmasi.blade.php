@@ -27,7 +27,7 @@
                                 <label for="status" class="form-label">Status</label>
                                 <select id="status" name="status" class="form-control border-0" style="background-color: #ededed">
                                     <option value="" disabled selected>Pilih Status</option>
-                                    @foreach (['Diajukan', 'Diterima', 'Diperbaiki', 'Dibelikan', 'Di Sarpras', 'Dijurusan'] as $statusOption)
+                                    @foreach (['Diajukan', 'Diterima', 'Diperbaiki', 'Dibelikan', 'Di Sarpras', 'Dijurusan', 'Rusak'] as $statusOption)
                                         <option value="{{ $statusOption }}"
                                             {{ $pengajuan->status == $statusOption ? 'selected' : '' }}>
                                             {{ $statusOption }}

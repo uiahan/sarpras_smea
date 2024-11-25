@@ -139,8 +139,8 @@
                                 <label for="status">Status</label>
                                 <select name="status" id="status" class="form-control border-0"
                                     style="background-color: #ededed">
-                                    <option value="Diajukan" {{ request('status') == 'Diajukan' ? 'selected' : '' }}>
-                                        Diajukan
+                                    <option value="" disabled {{ request('status') == '' ? 'selected' : '' }}>
+                                        Pilih Status
                                     </option>
                                     <option value="Diterima" {{ request('status') == 'Diterima' ? 'selected' : '' }}>
                                         Diterima
@@ -190,6 +190,9 @@
                                 <label for="status">Status</label>
                                 <select name="status" id="status" class="form-control border-0"
                                     style="background-color: #ededed">
+                                    <option value="" disabled {{ request('status') == '' ? 'selected' : '' }}>
+                                        Pilih Status
+                                    </option>
                                     <option value="Diajukan" {{ request('status') == 'Diajukan' ? 'selected' : '' }}>
                                         Diajukan
                                     </option>
@@ -206,6 +209,9 @@
                                         Sarpras</option>
                                     <option value="Dijurusan" {{ request('status') == 'Dijurusan' ? 'selected' : '' }}>
                                         Dijurusan
+                                    </option>
+                                    <option value="Rusak" {{ request('rusak') == 'Rusak' ? 'selected' : '' }}>
+                                        Rusak
                                     </option>
                                 </select>
                             </div>
@@ -278,9 +284,9 @@
                                                 class="btn btn-success ms-1" style="padding: 12px 15px;">
                                                 <i class="fa-solid fa-pen-to-square"></i>
                                             </a>
-                                            <a href="#" class="btn text-white ms-1 btn-merah delete-btn"
+                                            <a href="{{ route('postHapusPengajuan', $item->id) }}" class="btn text-white ms-1 btn-merah"
                                                 style="padding: 12px 15px; background-color:#d9261c;"
-                                                data-url="{{ route('postHapusPengajuan', $item->id) }}">
+                                                onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
                                                 <i class="fa-solid fa-trash"></i>
                                             </a>
 

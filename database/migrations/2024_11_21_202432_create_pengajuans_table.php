@@ -27,7 +27,7 @@ return new class extends Migration
             $table->integer('harga_beli')->nullable();
             $table->string('sumber_dana')->nullable();
             $table->string('keterangan');
-            $table->enum('status', ['Diajukan', 'Diterima', 'Diperbaiki', 'Dibelikan', 'Di Sarpras', 'Dijurusan']);
+            $table->enum('status', ['Diajukan', 'Diterima', 'Diperbaiki', 'Dibelikan', 'Di Sarpras', 'Dijurusan', 'Rusak']);
             $table->timestamps();
         });
     }

@@ -80,7 +80,7 @@
                                                 style="padding: 12px 15px;">
                                                 <i class="fa-solid fa-key"></i>
                                             </a>
-                                            <a href="{{ route('postHapusUser', $item->id) }}" class="btn text-white ms-1 btn-merah delete-btn"
+                                            <a href="{{ route('postHapusUser', $item->id) }}" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');" class="btn text-white ms-1 btn-merah"
                                                 style="padding: 12px 15px; background-color:#d9261c;"
                                                 >
                                                 <i class="fa-solid fa-trash"></i>

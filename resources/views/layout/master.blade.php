@@ -75,33 +75,47 @@
         });
 
 
-        document.addEventListener('DOMContentLoaded', function() {
+        $(document).on('click', '.delete-btn', function(event) {
+    event.preventDefault(); // Hindari navigasi default dari tag <a>
 
-            const deleteButtons = document.querySelectorAll('.delete-btn');
+    const url = $(this).attr('href'); // Ambil URL dari atribut href
 
-            deleteButtons.forEach(button => {
-                button.addEventListener('click', function(e) {
-                    e.preventDefault();
-
-                    const deleteUrl = this.getAttribute('data-url');
-
-                    Swal.fire({
-                        title: 'Apakah Anda yakin?',
-                        text: "Data ini akan dihapus secara permanen!",
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#d33',
-                        cancelButtonColor: '#3085d6',
-                        confirmButtonText: 'Ya, Hapus!',
-                        cancelButtonText: 'Batal'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            window.location.href = deleteUrl;
-                        }
-                    });
-                });
+    // SweetAlert konfirmasi
+    Swal.fire({
+        title: 'Apakah Anda yakin?',
+        text: 'Data ini akan dihapus!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, hapus!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Kirim permintaan GET menggunakan fetch
+            fetch(url, {
+                method: 'GET', // Karena Anda menggunakan GET
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest', // Identifikasi sebagai AJAX
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire('Terhapus!', data.message, 'success');
+                    $('#example').DataTable().ajax.reload(); // Reload DataTable
+                } else {
+                    Swal.fire('Gagal!', data.message || 'Gagal menghapus data.', 'error');
+                }
+            })
+            .catch(error => {
+                Swal.fire('Gagal!', 'Terjadi kesalahan saat menghapus.', 'error');
+                console.error('Error:', error);
             });
-        });
+        }
+    });
+});
+
     </script>
     <style>
         .toast {

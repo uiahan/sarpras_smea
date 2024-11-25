@@ -52,7 +52,7 @@ class PengajuanController extends Controller
         }
 
         // Urutkan berdasarkan tanggal
-        $query->orderBy('tanggal_ajuan', 'desc');
+        $query->orderBy('created_at', 'desc');
 
         // Ambil data dan jumlah
         $pengajuan = $query->get();

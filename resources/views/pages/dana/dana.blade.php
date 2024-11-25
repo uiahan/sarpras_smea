@@ -70,10 +70,10 @@
                                                 style="padding: 12px 15px;">
                                                 <i class="fa-solid fa-pen-to-square"></i>
                                             </a>
-                                            <a href="#" class="btn text-white ms-1 btn-merah delete-btn"
+                                            <a href="{{ route('postHapusDana', $item->id) }}" class="btn text-white ms-1 btn-merah"
                                                 style="padding: 12px 15px; background-color:#d9261c;"
                                                 data-url="{{ route('postHapusDana', $item->id) }}">
-                                                <i class="fa-solid fa-trash"></i>
+                                                <i class="fa-solid fa-trash" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');"></i>
                                             </a>
 
                                         </div>
