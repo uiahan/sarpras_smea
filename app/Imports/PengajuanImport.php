@@ -5,7 +5,6 @@ namespace App\Imports;
 use App\Models\Pengajuan;
 use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
@@ -19,22 +18,13 @@ class PengajuanImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         // Cari pengguna berdasarkan jurusan dan role
-        $currentUser = Auth::user();
+        $user = User::where('role', $row['jurusan']) // Gantilah dengan logika yang relevan dengan kasus Anda
+            ->first();
 
-        // Tentukan user_id berdasarkan role
-        if ($currentUser->role === 'admin') {
-            // Jika yang login adalah admin, cari user berdasarkan jurusan
-            $user = User::where('role', $row['jurusan'])->first();
-
-            if (!$user) {
-                // Jika tidak ada pengguna dengan jurusan dan role yang cocok, kembalikan null atau lakukan error handling sesuai kebutuhan Anda
-                return null;
-            }
-
-            $userId = $user->id;
-        } else {
-            // Jika yang login bukan admin, gunakan user_id dari pengguna yang sedang login
-            $userId = $currentUser->id;
+        if (!$user) {
+            // Jika tidak ada pengguna dengan jurusan dan role yang cocok, kembalikan null atau lakukan error handling sesuai kebutuhan Anda
+            return null;
+            
         }
 
         // Periksa apakah tanggal_ajuan adalah angka serial Excel
@@ -56,7 +46,7 @@ class PengajuanImport implements ToModel, WithHeadingRow
         }
 
         return new Pengajuan([
-            'user_id' => $userId,  // Menggunakan user_id dari hasil pencarian
+            'user_id' => $user->id,  // Menggunakan user_id dari hasil pencarian
             'barang' => $row['barang'],
             'program_kegiatan' => $row['program_kegiatan'],
             'jurusan' => $row['jurusan'],
