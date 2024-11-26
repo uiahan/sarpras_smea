@@ -18,7 +18,8 @@
             <div class="card border-0 mt-4 p-4 shadow">
                 <h4 class=" text-secondary">Data Excel</h4>
                 <hr>
-                <form action="{{ route('postUploadExcel') }}" method="POST" enctype="multipart/form-data" class="form-group">
+                <form action="{{ route('postUploadExcel') }}" method="POST" enctype="multipart/form-data"
+                    class="form-group">
                     @csrf
                     <div class="row">
                         <div class="col-12">
@@ -27,6 +28,10 @@
                                 <input type="file" name="file" class="form-control" id="file"
                                     accept=".xlsx, .xls">
                             </div>
+                            <a href="{{ route('downloadFormatUploadPengajuan') }}" class="btn btn-sm mt-3"
+                                style="background-color: #ededed; padding: 6px 12px; font-size: 12px; border-radius: 4px;">
+                                Download Contoh Format Excel
+                            </a>
                         </div>
                         <div>
                             <button type="submit" class="btn text-white mt-3 btn-kuning" style="background-color: #edbb05"

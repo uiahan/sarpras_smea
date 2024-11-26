@@ -6,6 +6,7 @@ use App\Models\Detail;
 use App\Models\Format;
 use App\Models\FormatPengajuan;
 use App\Models\FormatPengambilan;
+use App\Models\FormatUploadPengajuan;
 use App\Models\Jurusan;
 use App\Models\Pengajuan;
 use App\Models\SumberDana;
@@ -188,6 +189,11 @@ class DatabaseSeeder extends Seeder
 
         FormatPengambilan::create([
             'format_pengambilan_file' => 'document/format_pengambilan.docx',
+            'user_id' => 1,
+        ]);
+
+        FormatUploadPengajuan::create([
+            'format_upload_pengajuan_file' => 'document/format_upload_excel.xlsx',
             'user_id' => 1,
         ]);
     }

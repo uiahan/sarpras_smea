@@ -63,6 +63,28 @@
                             </div>
                         </div>
                     </form>
+                    <hr class="mt-3">
+                    <form action="{{ route('uploadFormatUploadPengajuan') }}" method="POST" enctype="multipart/form-data" class="form-group">
+                        @csrf
+                        <div class="col-12 mt-3">
+                            <div>
+                                <label for="format_upload_pengajuan_file" class="form-label">Upload Format Excel Pengajuan
+                                    Barang</label>
+                                <input type="file" id="format_upload_pengajuan_file" name="format_upload_pengajuan_file"
+                                    class="form-control border-0" style="background-color: #ededed" required>
+                                    <input type="text" readonly value="{{ $excel->format_upload_pengajuan_file }}"
+                                    class="form-control border-0 mt-3" style="background-color: #ededed">
+                                <button type="submit" class="btn btn-sm mt-3"
+                                    style="background-color: #ededed; padding: 6px 12px; font-size: 12px; border-radius: 4px;">
+                                    Upload
+                                </button>
+                                <a href="{{ route('downloadFormatUploadPengajuan') }}" class="btn btn-sm mt-3"
+                                    style="background-color: #ededed; padding: 6px 12px; font-size: 12px; border-radius: 4px;">
+                                    Download
+                                </a>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

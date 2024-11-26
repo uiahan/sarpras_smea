@@ -83,6 +83,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/uploadFormatPengambilan', [FormatController::class, 'uploadFormatPengambilan'])->name('uploadFormatPengambilan');
     Route::get('/downloadFormatPengajuan', [FormatController::class, 'downloadFormatPengajuan'])->name('downloadFormatPengajuan');
     Route::get('/downloadFormatPengambilan', [FormatController::class, 'downloadFormatPengambilan'])->name('downloadFormatPengambilan');
+    Route::post('/uploadFormatUploadPengajuan', [FormatController::class, 'uploadFormatUploadPengajuan'])->name('uploadFormatUploadPengajuan');
+    Route::get('/downloadFormatUploadPengajuan', [FormatController::class, 'downloadFormatUploadPengajuan'])->name('downloadFormatUploadPengajuan');
 
     //upload
     Route::post('/uploadFile', [UploadController::class, 'uploadFile'])->name('uploadFile');

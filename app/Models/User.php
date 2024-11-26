@@ -51,6 +51,11 @@ class User extends Authenticatable
         return $this->hasMany(FormatPengambilan::class, 'user_id');
     }
 
+    public function FormatUploadPengajuan()
+    {
+        return $this->hasMany(FormatUploadPengajuan::class, 'user_id');
+    }
+
 
     /**
      * The attributes that are mass assignable.
