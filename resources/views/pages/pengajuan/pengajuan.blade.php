@@ -29,10 +29,10 @@
 
             <div class="card border-0 mt-4 p-4 shadow">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <h4 class="me-auto text-secondary">Tabel Pengajuan</h4>
                     </div>
-                    <div class="col-md-8 d-flex justify-content-end d-none d-xl-block">
+                    <div class="col-md-9 d-flex justify-content-end d-none d-xl-block">
                         <div class="d-flex justify-content-end">
                             <a href="{{ route('download.pengajuan') }}" class="btn rounded-4 text-white btn-kuning"
                                 style="background-color: #edbb05">
@@ -45,17 +45,17 @@
                                 </button>
                                 <ul class="dropdown-menu">
                                     @if ($user->role == 'admin')
-                                    <li class="mt-1">
-                                        <a class="dropdown-item" href="{{ route('dokumen') }}">
-                                            <i class="fa-solid fa-eye"></i> Lihat
-                                        </a>
-                                    </li>
+                                        <li class="mt-1">
+                                            <a class="dropdown-item" href="{{ route('dokumen') }}">
+                                                <i class="fa-solid fa-eye"></i> Lihat
+                                            </a>
+                                        </li>
                                     @else
-                                    <li>
-                                        <a class="dropdown-item" href="{{ route('uploadPengajuan') }}">
-                                            <i class="fa-solid fa-upload"></i> Upload
-                                        </a>
-                                    </li>
+                                        <li>
+                                            <a class="dropdown-item" href="{{ route('uploadPengajuan') }}">
+                                                <i class="fa-solid fa-upload"></i> Upload
+                                            </a>
+                                        </li>
                                         <li class="mt-1">
                                             <a class="dropdown-item" href="{{ route('downloadPengajuan') }}">
                                                 <i class="fa-solid fa-eye"></i> Lihat
@@ -69,17 +69,19 @@
                                 style="background-color: #edbb05">
                                 <i class="fa-solid fa-code-pull-request"></i> Tambah pengajuan
                             </a>
-                            <a href="{{ route('pengajuan.downloadPDF') }}" class="btn ms-2 rounded-4 text-white btn-kuning"
-                                style="background-color: #edbb05">
+                            <a href="{{ route('pengajuan.downloadPDF') }}" class="btn ms-2 rounded-4 text-white btn-primary">
                                 <i class="fa-solid fa-file-pdf"></i> Download PDF
+                            </a>
+                            <a href="{{ route('uploadExcel') }}" class="btn btn-success ms-2 rounded-4 text-white">
+                                <i class="fa-solid fa-file-excel"></i> Upload Excel
                             </a>
                         </div>
                     </div>
 
                     <div class="col-md-12 d-block d-xl-none">
                         <div>
-                            <a href="{{ route('download.pengajuan') }}" class="btn mt-3 w-100 rounded-4 text-white btn-kuning"
-                                style="background-color: #edbb05">
+                            <a href="{{ route('download.pengajuan') }}"
+                                class="btn mt-3 w-100 rounded-4 text-white btn-kuning" style="background-color: #edbb05">
                                 <i class="fa-solid fa-download"></i> Download format ajuan
                             </a>
                             <div class="btn-group w-100">
@@ -89,17 +91,17 @@
                                 </button>
                                 <ul class="dropdown-menu">
                                     @if ($user->role == 'admin')
-                                    <li class="mt-1">
-                                        <a class="dropdown-item" href="{{ route('dokumen') }}">
-                                            <i class="fa-solid fa-eye"></i> Lihat
-                                        </a>
-                                    </li>
+                                        <li class="mt-1">
+                                            <a class="dropdown-item" href="{{ route('dokumen') }}">
+                                                <i class="fa-solid fa-eye"></i> Lihat
+                                            </a>
+                                        </li>
                                     @else
-                                    <li>
-                                        <a class="dropdown-item" href="{{ route('uploadPengajuan') }}">
-                                            <i class="fa-solid fa-upload"></i> Upload
-                                        </a>
-                                    </li>
+                                        <li>
+                                            <a class="dropdown-item" href="{{ route('uploadPengajuan') }}">
+                                                <i class="fa-solid fa-upload"></i> Upload
+                                            </a>
+                                        </li>
                                         <li class="mt-1">
                                             <a class="dropdown-item" href="{{ route('downloadPengajuan') }}">
                                                 <i class="fa-solid fa-eye"></i> Lihat
@@ -113,12 +115,12 @@
                                 style="background-color: #edbb05">
                                 <i class="fa-solid fa-code-pull-request"></i> Tambah pengajuan
                             </a>
-                            <a href="{{ route('pengajuan.downloadPDF') }}" class="btn w-100 mt-3 rounded-4 text-white btn-kuning"
-                                style="background-color: #edbb05">
+                            <a href="{{ route('pengajuan.downloadPDF') }}"
+                                class="btn w-100 mt-3 rounded-4 text-white btn-kuning" style="background-color: #edbb05">
                                 <i class="fa-solid fa-file-pdf"></i> Download PDF
                             </a>
                         </div>
-                    </div> 
+                    </div>
 
                 </div>
                 <hr>
@@ -150,7 +152,8 @@
                                     <option value="Dibelikan" {{ request('status') == 'Dibelikan' ? 'selected' : '' }}>
                                         Dibelikan
                                     </option>
-                                    <option value="Di Sarpras" {{ request('status') == 'Di Sarpras' ? 'selected' : '' }}>Di
+                                    <option value="Di Sarpras" {{ request('status') == 'Di Sarpras' ? 'selected' : '' }}>
+                                        Di
                                         Sarpras</option>
                                     <option value="Dijurusan" {{ request('status') == 'Dijurusan' ? 'selected' : '' }}>
                                         Dijurusan
@@ -161,9 +164,11 @@
                                 <label for="role">Role</label>
                                 <select name="role" id="role" class="form-control border-0"
                                     style="background-color: #ededed">
-                                    <option value="" disabled {{ old('jurusan') ? '' : 'selected' }}>Pilih Jurusan</option>
+                                    <option value="" disabled {{ old('jurusan') ? '' : 'selected' }}>Pilih Jurusan
+                                    </option>
                                     @foreach ($jurusan as $item)
-                                        <option value="{{ $item->jurusan }}" {{ old('jurusan') == $item->id ? 'selected' : '' }}>
+                                        <option value="{{ $item->jurusan }}"
+                                            {{ old('jurusan') == $item->id ? 'selected' : '' }}>
                                             {{ $item->jurusan }}
                                         </option>
                                     @endforeach
@@ -259,18 +264,20 @@
                                         @else
                                             <span class="text-danger">Belum Ditentukan</span>
                                         @endif
-                                    </td>            
-                                    <td style="vertical-align: middle;">{{ number_format($item->harga_satuan, 0, ',', '.') }}</td>
+                                    </td>
+                                    <td style="vertical-align: middle;">
+                                        {{ number_format($item->harga_satuan, 0, ',', '.') }}</td>
                                     <td style="vertical-align: middle;">{{ $item->tahun }}</td>
                                     <td style="vertical-align: middle;">{{ $item->banyak }}</td>
-                                    <td style="vertical-align: middle;">{{ number_format($item->total_harga, 0, ',', '.') }}</td>
+                                    <td style="vertical-align: middle;">
+                                        {{ number_format($item->total_harga, 0, ',', '.') }}</td>
                                     <td style="vertical-align: middle;">
                                         @if ($item->harga_beli)
-                                        {{ number_format($item->harga_beli, 0, ',', '.') }}
+                                            {{ number_format($item->harga_beli, 0, ',', '.') }}
                                         @else
                                             <span class="text-danger">Belum Dimasukan</span>
                                         @endif
-                                    </td>       
+                                    </td>
                                     <td style="vertical-align: middle;">{{ $item->sumber_dana }}</td>
                                     <td style="vertical-align: middle;">{{ $item->keterangan }}</td>
                                     <td style="vertical-align: middle;">{{ $item->status }}</td>
@@ -284,7 +291,8 @@
                                                 class="btn btn-success ms-1" style="padding: 12px 15px;">
                                                 <i class="fa-solid fa-pen-to-square"></i>
                                             </a>
-                                            <a href="{{ route('postHapusPengajuan', $item->id) }}" class="btn text-white ms-1 btn-merah"
+                                            <a href="{{ route('postHapusPengajuan', $item->id) }}"
+                                                class="btn text-white ms-1 btn-merah"
                                                 style="padding: 12px 15px; background-color:#d9261c;"
                                                 onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
                                                 <i class="fa-solid fa-trash"></i>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\PengajuanImport;
 use App\Models\Format;
 use App\Models\Jurusan;
 use App\Models\Pengajuan;
@@ -11,6 +12,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PengajuanController extends Controller
 {
@@ -201,5 +203,27 @@ class PengajuanController extends Controller
 
         $pdf = Pdf::loadView('pdf.pengajuan', $data)->setPaper('A4', 'landscape');
         return $pdf->download('tabel_pengajuan.pdf');
+    }
+
+    public function uploadExcel() {
+        $user = Auth::user();
+        return view('pages.pengajuan.upload_excel', compact('user'));
+    }
+
+    public function postUploadExcel(Request $request)
+    {
+        // Validasi file
+        $request->validate([
+            'file' => 'required|mimes:xlsx,csv',
+        ]);
+    
+        // Mendapatkan file
+        $file = $request->file('file');
+    
+        // Proses upload dengan Laravel Excel
+        Excel::import(new PengajuanImport, $file);
+    
+        // Redirect dengan pesan sukses
+        return redirect()->route('pengajuan')->with('notif', 'Data Pengajuan berhasil di-upload!');
     }
 }

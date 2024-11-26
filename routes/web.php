@@ -30,6 +30,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/postEditPengajuan/{id}', [PengajuanController::class, 'postEditPengajuan'])->name('postEditPengajuan');
     Route::get('/postHapusPengajuan/{id}', [PengajuanController::class, 'postHapusPengajuan'])->name('postHapusPengajuan');
     Route::post('/postTambahPengajuan', [PengajuanController::class, 'postTambahPengajuan'])->name('postTambahPengajuan');
+    Route::get('/uploadExcel', [PengajuanController::class, 'uploadExcel'])->name('uploadExcel');
+    Route::post('/postUploadExcel', [PengajuanController::class, 'postUploadExcel'])->name('postUploadExcel');
 
     //detail
     Route::get('/detail/{pengajuan}', [DetailController::class, 'detail'])->name('detail');
