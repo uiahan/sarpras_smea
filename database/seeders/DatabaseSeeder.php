@@ -193,7 +193,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         FormatUploadPengajuan::create([
-            'format_upload_pengajuan_file' => 'document/format_upload_excel.xlsx',
+            'format_upload_pengajuan_file' => 'document/format_upload_pengajuan.xlsx',
             'user_id' => 1,
         ]);
     }
