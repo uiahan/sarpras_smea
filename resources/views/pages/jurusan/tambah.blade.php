@@ -24,7 +24,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div>
-                                <label for="jurusan" class="form-label">Nama Jurusan</label>
+                                <label for="jurusan" class="form-label">Nama Jurusan*</label>
                                 <input type="text" id="jurusan" name="jurusan" class="form-control border-0"
                                     style="background-color: #ededed" placeholder="masukan nama jurusan" required>
                             </div>

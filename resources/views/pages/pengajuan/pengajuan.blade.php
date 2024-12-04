@@ -34,7 +34,7 @@
                     </div>
                     <div class="col-md-9 d-flex justify-content-end d-none d-xl-block">
                         <div class="d-flex justify-content-end">
-                            <a href="{{ route('download.pengajuan') }}" class="btn rounded-4 text-white btn-kuning"
+                            <a href="{{ route('downloadFormatPengajuan') }}" class="btn rounded-4 text-white btn-kuning"
                                 style="background-color: #edbb05">
                                 <i class="fa-solid fa-download"></i> Download format ajuan
                             </a>
@@ -69,8 +69,8 @@
                                 style="background-color: #edbb05">
                                 <i class="fa-solid fa-code-pull-request"></i> Tambah pengajuan
                             </a>
-                            <a href="{{ route('pengajuan.downloadPDF') }}" class="btn ms-2 rounded-4 text-white btn-primary">
-                                <i class="fa-solid fa-file-pdf"></i> Download PDF
+                            <a href="{{ route('downloadExcelPengajuan') }}" class="btn ms-2 rounded-4 text-white btn-primary">
+                                <i class="fa-solid fa-file-excel"></i> Download Excel
                             </a>
                             <a href="{{ route('uploadExcel') }}" class="btn btn-success ms-2 rounded-4 text-white">
                                 <i class="fa-solid fa-file-excel"></i> Upload Excel
@@ -115,9 +115,11 @@
                                 style="background-color: #edbb05">
                                 <i class="fa-solid fa-code-pull-request"></i> Tambah pengajuan
                             </a>
-                            <a href="{{ route('pengajuan.downloadPDF') }}"
-                                class="btn w-100 mt-3 rounded-4 text-white btn-kuning" style="background-color: #edbb05">
-                                <i class="fa-solid fa-file-pdf"></i> Download PDF
+                            <a href="{{ route('downloadExcelPengajuan') }}" class="btn mt-3 w-100 rounded-4 text-white btn-primary">
+                                <i class="fa-solid fa-file-excel"></i> Download Excel
+                            </a>
+                            <a href="{{ route('uploadExcel') }}" class="btn btn-success mt-3 w-100 rounded-4 text-white">
+                                <i class="fa-solid fa-file-excel"></i> Upload Excel
                             </a>
                         </div>
                     </div>
@@ -234,18 +236,19 @@
                         <thead style="background-color: #f2f2f2">
                             <tr>
                                 <th scope="col">No</th>
-                                <th scope="col">Barang</th>
+                                <th scope="col">Spesifikasi nama barang</th>
                                 <th scope="col">Program kegiatan</th>
                                 <th scope="col">Jurusan</th>
                                 <th scope="col">Tanggal ajuan</th>
                                 <th scope="col">Tanggal realisasi</th>
                                 <th scope="col">Harga satuan</th>
                                 <th scope="col">Tahun</th>
-                                <th scope="col">Banyak</th>
+                                <th scope="col">Jumlah</th>
                                 <th scope="col">Total harga</th>
                                 <th scope="col">Harga beli</th>
                                 <th scope="col">Sumber dana</th>
                                 <th scope="col">Keterangan</th>
+                                <th scope="col">Keperluan</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Aksi</th>
                             </tr>
@@ -280,6 +283,7 @@
                                     </td>
                                     <td style="vertical-align: middle;">{{ $item->sumber_dana }}</td>
                                     <td style="vertical-align: middle;">{{ $item->keterangan }}</td>
+                                    <td style="vertical-align: middle;">{{ $item->keperluan }}</td>
                                     <td style="vertical-align: middle;">{{ $item->status }}</td>
                                     <td style="vertical-align: middle;">
                                         <div class="d-flex">

@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DetailKodeBarang;
+use App\Models\JenisBarang;
 use App\Models\Jurusan;
+use App\Models\KodeBarang;
 use App\Models\Pengajuan;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -69,8 +72,10 @@ class ValidasiController extends Controller
     public function konfirmasi($id)
     {
         $user = Auth::user();
+        $kodeBarang = KodeBarang::all();
+        $jenisBarang = JenisBarang::all();
         $pengajuan = Pengajuan::findOrFail($id);
-        return view('pages.validasi.konfirmasi', compact('user', 'pengajuan'));
+        return view('pages.validasi.konfirmasi', compact('user', 'pengajuan', 'kodeBarang', 'jenisBarang'));
     }
 
     public function update(Request $request, $id)
@@ -79,6 +84,12 @@ class ValidasiController extends Controller
             'status' => 'required|in:Diajukan,Diterima,Diperbaiki,Dibelikan,Di Sarpras,Dijurusan',
             'catatan' => 'nullable|string',
             'harga_beli' => 'nullable',
+            'satuan_barang' => 'nullable',
+            'kode_barang' => 'nullable',
+            'nusp' => 'nullable',
+            'nama_barang' => 'nullable',
+            'jenis_barang' => 'nullable',
+            'nomor_permintaan' => 'nullable',
             'tanggal_realisasi' => 'nullable|date',
         ]);
 
@@ -87,9 +98,24 @@ class ValidasiController extends Controller
             'status' => $request->status,
             'catatan' => $request->catatan,
             'harga_beli' => $request->harga_beli,
+            'satuan_barang' => $request->satuan_barang,
+            'kode_barang' => $request->kode_barang,
+            'nusp' => $request->nusp,
+            'nama_barang' => $request->nama_barang,
+            'jenis_barang' => $request->jenis_barang,
+            'nomor_permintaan' => $request->nomor_permintaan,
             'tanggal_realisasi' => $request->tanggal_realisasi,
         ]);
 
         return redirect()->route('validasi')->with('notif', 'Data pengajuan berhasil divalidasi.');
+    }
+
+    public function getNusp($kode_barang)
+    {
+        $detailKodeBarang = DetailKodeBarang::where('kode_barang_id', function ($query) use ($kode_barang) {
+            $query->select('id')->from('kode_barangs')->where('kode_barang', $kode_barang);
+        })->get();
+
+        return response()->json($detailKodeBarang);
     }
 }

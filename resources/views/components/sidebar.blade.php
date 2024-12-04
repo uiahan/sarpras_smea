@@ -60,36 +60,68 @@
                             class="nav_link {{ Request::routeIs('pengajuan') ? 'active' : '' }}">
                             <i class='fa-solid fa-book-bookmark nav_icon'></i><span class="nav_name">Pengajuan</span>
                         </a>
-                        @if ($user->role == ('admin'))
-                        <a href="{{ route('dokumen') }}"
-                            class="nav_link {{ Request::routeIs('dokumen') ? 'active' : '' }}">
-                            <i class="fa-solid fa-folder nav-icon"></i><span class="nav_name">Dokumen</span>
-                        </a>
-                        <a href="{{ route('validasi') }}"
-                            class="nav_link {{ Request::routeIs('validasi') ? 'active' : '' }}">
-                            <i class="fa-solid fa-circle-check nav-icon"></i><span class="nav_name">Validasi</span>
-                        </a>
-                        <a href="{{ route('jurusan') }}"
-                            class="nav_link {{ Request::routeIs('jurusan') ? 'active' : '' }}">
-                            <i class="fa-solid fa-graduation-cap nav-icon"></i><span class="nav_name">Jurusan</span>
-                        </a>
-                        <a href="{{ route('dana') }}"
-                            class="nav_link {{ Request::routeIs('dana') ? 'active' : '' }}">
-                            <i class="fa-solid fa-money-check-dollar nav-icon"></i><span class="nav_name">Dana</span>
-                        </a>
-                        <a href="{{ route('user') }}"
-                            class="nav_link {{ Request::routeIs('user') ? 'active' : '' }}">
-                            <i class="fa-solid fa-user nav_icon"></i><span class="nav_name">User</span>
-                        </a>
-                        <a href="{{ route('setting') }}"
-                            class="nav_link {{ Request::routeIs('setting') ? 'active' : '' }}">
-                            <i class="fa-solid fa-gear nav_icon"></i><span class="nav_name">Setting</span>
-                        </a>
-                        @else
                         <a href="{{ route('pengambilan') }}"
                             class="nav_link {{ Request::routeIs('pengambilan') ? 'active' : '' }}">
                             <i class="fa-solid fa-book nav_icon"></i><span class="nav_name">Pengambilan</span>
                         </a>
+                        @if ($user->role == 'admin')
+                            <a href="{{ route('dokumen') }}"
+                                class="nav_link {{ Request::routeIs('dokumen') ? 'active' : '' }}">
+                                <i class="fa-solid fa-folder nav-icon"></i><span class="nav_name">Dokumen</span>
+                            </a>
+                            <a href="{{ route('validasi') }}"
+                                class="nav_link {{ Request::routeIs('validasi') ? 'active' : '' }}">
+                                <i class="fa-solid fa-circle-check nav-icon"></i><span class="nav_name">Validasi</span>
+                            </a>
+                            <a href="{{ route('nomorVerifikasi') }}"
+                                class="nav_link {{ Request::routeIs('nomorVerifikasi') ? 'active' : '' }}">
+                                <i class="fa-solid fa-note-sticky nav-icon"></i><span class="nav_name">Nota Permintaan</span>
+                            </a>
+                            <a href="{{ route('suratPermintaan') }}"
+                                class="nav_link {{ Request::routeIs('suratPermintaan') ? 'active' : '' }}">
+                                <i class="fa-solid fa-envelope nav-icon"></i><span class="nav_name">Surat Permintaan</span>
+                            </a>
+                            <a href="{{ route('sppb') }}"
+                                class="nav_link {{ Request::routeIs('sppb') ? 'active' : '' }}">
+                                <i class="fa-solid fa-file-alt nav-icon"></i><span class="nav_name">SPPB</span>
+                            </a>
+                            <a href="{{ route('bast') }}"
+                                class="nav_link {{ Request::routeIs('bast') ? 'active' : '' }}">
+                                <i class="fa-solid fa-handshake nav-icon"></i><span class="nav_name">BAST</span>
+                            </a>
+                            <a href="{{ route('pengeluaran') }}"
+                                class="nav_link {{ Request::routeIs('pengeluaran') ? 'active' : '' }}">
+                                <i class="fa-solid fa-money-bill-wave nav-icon"></i><span class="nav_name">Pengeluaran</span>
+                            </a>
+                            <a href="{{ route('kartuPersediaan') }}"
+                                class="nav_link {{ Request::routeIs('kartuPersediaan') ? 'active' : '' }}">
+                                <i class="fa-solid fa-boxes-stacked nav-icon"></i><span class="nav_name">Kartu Persediaan</span>
+                            </a>
+                            <a href="{{ route('kodeBarang') }}"
+                                class="nav_link {{ Request::routeIs('kodeBarang') ? 'active' : '' }}">
+                                <i class="fa-solid fa-code nav-icon"></i><span class="nav_name">Kode Barang</span>
+                            </a>
+                            <a href="{{ route('jenisBarang') }}"
+                                class="nav_link {{ Request::routeIs('jenisBarang') ? 'active' : '' }}">
+                                <i class="fa-solid fa-layer-group nav-icon"></i><span class="nav_name">Jenis Barang</span>
+                            </a>
+                            <a href="{{ route('jurusan') }}"
+                                class="nav_link {{ Request::routeIs('jurusan') ? 'active' : '' }}">
+                                <i class="fa-solid fa-graduation-cap nav-icon"></i><span class="nav_name">Jurusan</span>
+                            </a>
+                            <a href="{{ route('dana') }}"
+                                class="nav_link {{ Request::routeIs('dana') ? 'active' : '' }}">
+                                <i class="fa-solid fa-money-check-dollar nav-icon"></i><span
+                                    class="nav_name">Dana</span>
+                            </a>
+                            <a href="{{ route('user') }}"
+                                class="nav_link {{ Request::routeIs('user') ? 'active' : '' }}">
+                                <i class="fa-solid fa-user nav_icon"></i><span class="nav_name">User</span>
+                            </a>
+                            <a href="{{ route('setting') }}"
+                                class="nav_link {{ Request::routeIs('setting') ? 'active' : '' }}">
+                                <i class="fa-solid fa-gear nav_icon"></i><span class="nav_name">Setting</span>
+                            </a>
                         @endif
                     </div>
                 </div>
@@ -268,6 +300,8 @@
             color: var(--first-color-light);
             margin-bottom: 0.5rem;
             transition: .1s
+            font-size: 0.85rem; /* Perkecil ukuran font */
+    padding: 0.3rem 0.8rem; 
         }
 
         .nav_link:hover {
@@ -280,7 +314,8 @@
         .show .nav_link:hover {}
 
         .nav_icon {
-            font-size: 1.25rem
+            font-size: 1.25rem; /* Perkecil ukuran ikon */
+
         }
 
         .show {

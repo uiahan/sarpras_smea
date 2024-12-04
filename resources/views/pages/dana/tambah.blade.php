@@ -24,7 +24,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div>
-                                <label for="sumber_dana" class="form-label">Nama Sumber Dana</label>
+                                <label for="sumber_dana" class="form-label">Nama Sumber Dana*</label>
                                 <input type="text" id="sumber_dana" name="sumber_dana" class="form-control border-0"
                                     style="background-color: #ededed" placeholder="masukan nama sumber dana" required>
                             </div>

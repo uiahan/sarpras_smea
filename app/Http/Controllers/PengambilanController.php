@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pengajuan;
+use App\Exports\PengambilanExport;
 use App\Models\Uploadpengambilan;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Auth;
 
 class PengambilanController extends Controller
@@ -68,5 +70,14 @@ class PengambilanController extends Controller
         $pengajuan->save();
 
         return redirect()->back()->with('notif', 'Status berhasil diubah menjadi Dijurusan');
+    }
+
+    public function exportPengambilan()
+    {
+        // Filter data berdasarkan status
+        $pengambilan = Pengajuan::whereIn('status', ['Dijurusan', 'Di Sarpras'])->get();
+
+        // Ekspor data ke Excel
+        return Excel::download(new PengambilanExport($pengambilan), 'pengambilan_dijurusan_sarpras.xlsx');
     }
 }

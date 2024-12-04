@@ -24,21 +24,21 @@
                     <div class="row">
                         <div class="col-xl-6 col-12">
                             <div>
-                                <label for="nama" class="form-label">Nama</label>
+                                <label for="nama" class="form-label">Nama*</label>
                                 <input type="text" id="nama" name="nama" class="form-control border-0"
                                     style="background-color: #ededed" placeholder="masukan nama" required>
                             </div>
                         </div>
                         <div class="col-xl-6 col-12 mt-3 mt-xl-0">
                             <div>
-                                <label for="keterangan" class="form-label">Keterangan</label>
+                                <label for="keterangan" class="form-label">Keterangan*</label>
                                 <input type="text" id="keterangan" name="keterangan" class="form-control border-0"
                                     style="background-color: #ededed" placeholder="masukan keterangan" required>
                             </div>
                         </div>
                         <div class="col-xl-6 col-12 mt-3">
                             <div>
-                                <label for="gambar" class="form-label">Gambar</label>
+                                <label for="gambar" class="form-label">Gambar (opsional)</label>
                                 <input type="file" id="gambar" name="gambar" class="form-control border-0"
                                     style="background-color: #ededed; height: 300;" placeholder="masukan gambar" required
                                     onchange="previewImage(event)">

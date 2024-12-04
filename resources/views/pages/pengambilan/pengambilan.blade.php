@@ -34,25 +34,24 @@
                     </div>
                     <div class="col-md-8 d-flex justify-content-end d-none d-xl-block">
                         <div class="d-flex justify-content-end">
-                            <a href="{{ route('download.pengambilan') }}" class="btn rounded-4 text-white btn-kuning"
+                            <a href="{{ route('downloadFormatPengambilan') }}" class="btn rounded-4 text-white btn-kuning"
                                 style="background-color: #edbb05">
                                 <i class="fa-solid fa-download"></i> Download format pengambilan
                             </a>
-                            <a href="{{ route('pengajuan.downloadPDF') }}" class="btn ms-2 rounded-4 text-white btn-kuning"
-                                style="background-color: #edbb05">
-                                <i class="fa-solid fa-file-pdf"></i> Download PDF
+                            <a href="{{ route('downloadPengambilanExcel') }}" class="btn ms-2 rounded-4 text-white btn-success">
+                                <i class="fa-solid fa-file-pdf"></i> Download Excel
                             </a>
                         </div>
                     </div>
                     <div class="col-md-12 d-block d-xl-none">
                         <div>
-                            <a href="{{ route('download.pengambilan') }}"
+                            <a href="{{ route('downloadFormatPengambilan') }}"
                                 class="btn mt-3 w-100 rounded-4 text-white btn-kuning" style="background-color: #edbb05">
                                 <i class="fa-solid fa-download"></i> Download format pengambilan
                             </a>
-                            <a href="{{ route('pengajuan.downloadPDF') }}"
-                                class="btn w-100 mt-3 rounded-4 text-white btn-kuning" style="background-color: #edbb05">
-                                <i class="fa-solid fa-file-pdf"></i> Download PDF
+                            <a href="{{ route('downloadPengambilanExcel') }}"
+                                class="btn w-100 mt-3 rounded-4 text-white btn-success">
+                                <i class="fa-solid fa-file-excel"></i> Download Excel
                             </a>
                         </div>
                     </div>
@@ -83,18 +82,26 @@
                         <thead style="background-color: #f2f2f2">
                             <tr>
                                 <th scope="col">No</th>
-                                <th scope="col">Barang</th>
+                                <th scope="col">Nama barang</th>
+                                <th scope="col">Spesifikasi nama barang</th>
+                                <th scope="col">Satuan barang</th>
+                                <th scope="col">Kode barang</th>
+                                <th scope="col">NUSP</th>
+                                <th scope="col">Keperluan</th>
+                                <th scope="col">Jenis barang</th>
+                                <th scope="col">Nomor permintaan</th>
                                 <th scope="col">Program kegiatan</th>
                                 <th scope="col">Jurusan</th>
                                 <th scope="col">Tanggal ajuan</th>
                                 <th scope="col">Tanggal realisasi</th>
                                 <th scope="col">Harga satuan</th>
                                 <th scope="col">Tahun</th>
-                                <th scope="col">Banyak</th>
+                                <th scope="col">Jumlah</th>
                                 <th scope="col">Total harga</th>
                                 <th scope="col">Harga beli</th>
                                 <th scope="col">Sumber dana</th>
                                 <th scope="col">Keterangan</th>
+                                <th scope="col">catatan</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Aksi</th>
                             </tr>
@@ -103,7 +110,57 @@
                             @foreach ($pengajuan as $item)
                                 <tr>
                                     <td style="vertical-align: middle;" scope="row">{{ $loop->iteration }}</td>
+                                    <td style="vertical-align: middle;">
+                                        @if ($item->nama_barang)
+                                            {{ $item->nama_barang }}
+                                        @else
+                                            <span class="text-danger">Belum Dimasukan</span>
+                                        @endif
+                                    </td>
                                     <td style="vertical-align: middle;">{{ $item->barang }}</td>
+                                    <td style="vertical-align: middle;">
+                                        @if ($item->satuan_barang)
+                                            {{ $item->satuan_barang }}
+                                        @else
+                                            <span class="text-danger">Belum Dimasukan</span>
+                                        @endif
+                                    </td>
+                                    <td style="vertical-align: middle;">
+                                        @if ($item->kode_barang)
+                                            {{ $item->kode_barang }}
+                                        @else
+                                            <span class="text-danger">Belum Dimasukan</span>
+                                        @endif
+                                    </td>
+                                    <td style="vertical-align: middle;">
+                                        @if ($item->nusp)
+                                            {{ $item->nusp }}
+                                        @else
+                                            <span class="text-danger">Belum Dimasukan</span>
+                                        @endif
+                                    </td>
+                                    
+                                    <td style="vertical-align: middle;">
+                                        @if ($item->keperluan)
+                                            {{ $item->keperluan }}
+                                        @else
+                                            <span class="text-danger">Belum Dimasukan</span>
+                                        @endif
+                                    </td>
+                                    <td style="vertical-align: middle;">
+                                        @if ($item->jenis_barang)
+                                            {{ $item->jenis_barang }}
+                                        @else
+                                            <span class="text-danger">Belum Dimasukan</span>
+                                        @endif
+                                    </td>
+                                    <td style="vertical-align: middle;">
+                                        @if ($item->nomor_permintaan)
+                                            {{ $item->nomor_permintaan }}
+                                        @else
+                                            <span class="text-danger">Belum Dimasukan</span>
+                                        @endif
+                                    </td>
                                     <td style="vertical-align: middle;">{{ $item->program_kegiatan }}</td>
                                     <td style="vertical-align: middle;">{{ $item->jurusan }}</td>
                                     <td style="vertical-align: middle;">{{ $item->tanggal_ajuan }}</td>
@@ -129,6 +186,11 @@
                                     </td>
                                     <td style="vertical-align: middle;">{{ $item->sumber_dana }}</td>
                                     <td style="vertical-align: middle;">{{ $item->keterangan }}</td>
+                                    <td style="vertical-align: middle;">@if ($item->catatan)
+                                        {{ ($item->catatan) }}
+                                    @else
+                                        <span class="text-danger">Tidak Ada Catatan</span>
+                                    @endif</td>
                                     <td style="vertical-align: middle;">{{ $item->status }}</td>
                                     <td style="vertical-align: middle;">
                                         <div class="d-flex">

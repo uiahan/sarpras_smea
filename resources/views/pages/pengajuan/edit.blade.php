@@ -185,6 +185,13 @@
                         @endif
                         <div class="col-12 mt-3">
                             <div>
+                                <label for="keperluan" class="form-label">keperluan</label>
+                                <textarea id="keperluan" name="keperluan" class="form-control border-0" required
+                                    style="background-color: #ededed;" placeholder="masukan keperluan">{{ $pengajuan->keperluan }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-12 mt-3">
+                            <div>
                                 <label for="keterangan" class="form-label">Keterangan</label>
                                 <textarea id="keterangan" name="keterangan" class="form-control border-0" required
                                     style="background-color: #ededed; height: 7rem" placeholder="masukan keterangan">{{ $pengajuan->keterangan }}</textarea>

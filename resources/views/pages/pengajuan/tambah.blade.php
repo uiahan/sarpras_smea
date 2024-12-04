@@ -25,7 +25,7 @@
                         @if (in_array($user->role, ['admin']))
                         <div class="col-xl-6 col-12">
                             <div>
-                                <label for="jurusan" class="form-label">Nama Jurusan</label>
+                                <label for="jurusan" class="form-label">Nama Jurusan*</label>
                                 <select id="jurusan" name="jurusan" class="form-control border-0"
                                     style="background-color: #ededed">
                                     <option value="" disabled selected>pilih Jurusan</option>
@@ -38,7 +38,7 @@
                         @else
                         <div class="col-xl-6 col-12" hidden>
                             <div>
-                                <label for="jurusan" class="form-label">Nama Jurusan / Role User</label>
+                                <label for="jurusan" class="form-label">Nama Jurusan / Role User*</label>
                                 <input type="text" id="jurusan" name="jurusan" readonly value="{{ $user->role }}"
                                     class="form-control border-0" style="background-color: #ededed"
                                     placeholder="masukan nama jurusan" required>
@@ -48,7 +48,7 @@
                         @if (in_array($user->role, ['admin']))
                         <div class="col-xl-6 col-12 mt-3 mt-xl-0">
                             <div>
-                                <label for="status" class="form-label">Status</label>
+                                <label for="status" class="form-label">Status*</label>
                                 <input type="text" id="status" name="status" value="Diajukan" readonly
                                     class="form-control border-0" style="background-color: #ededed" required>
                             </div>
@@ -56,7 +56,7 @@
                         @else
                         <div class="col-xl-6 col-12 mt-3" hidden>
                             <div>
-                                <label for="status" class="form-label">Status</label>
+                                <label for="status" class="form-label">Status*</label>
                                 <input type="text" id="status" name="status" value="Diajukan" readonly
                                     class="form-control border-0" style="background-color: #ededed" required>
                             </div>
@@ -65,7 +65,7 @@
                         @if (in_array($user->role, ['admin']))
                         <div class="col-xl-6 col-12 mt-3">
                             <div>
-                                <label for="barang" class="form-label">Nama Barang</label>
+                                <label for="barang" class="form-label">Nama Barang*</label>
                                 <input type="text" id="barang" name="barang" class="form-control border-0"
                                     style="background-color: #ededed" placeholder="masukan nama barang" required>
                             </div>
@@ -73,7 +73,7 @@
                         @else
                         <div class="col-xl-6 col-12">
                             <div>
-                                <label for="barang" class="form-label">Nama Barang</label>
+                                <label for="barang" class="form-label">Nama Barang*</label>
                                 <input type="text" id="barang" name="barang" class="form-control border-0"
                                     style="background-color: #ededed" placeholder="masukan nama barang" required>
                             </div>
@@ -82,7 +82,7 @@
                         @if ($user->role == 'admin')
                         <div class="col-xl-6 col-12 mt-3">
                             <div>
-                                <label for="program_kegiatan" class="form-label">Program Kegiatan</label>
+                                <label for="program_kegiatan" class="form-label">Program Kegiatan*</label>
                                 <input type="text" id="program_kegiatan" name="program_kegiatan"
                                     class="form-control border-0" style="background-color: #ededed"
                                     placeholder="masukan program kegiatan" required>
@@ -91,7 +91,7 @@
                         @else
                         <div class="col-xl-6 col-12 mt-3 mt-xl-0">
                             <div>
-                                <label for="program_kegiatan" class="form-label">Program Kegiatan</label>
+                                <label for="program_kegiatan" class="form-label">Program Kegiatan*</label>
                                 <input type="text" id="program_kegiatan" name="program_kegiatan"
                                     class="form-control border-0" style="background-color: #ededed"
                                     placeholder="masukan program kegiatan" required>
@@ -100,14 +100,14 @@
                         @endif
                         <div class="col-xl-6 col-12 mt-3">
                             <div>
-                                <label for="tahun" class="form-label">Tahun Pengajuan</label>
+                                <label for="tahun" class="form-label">Tahun Pengajuan*</label>
                                 <input type="number" id="tahun" name="tahun" placeholder="masukan tahun pengajuan"
                                     class="form-control border-0" style="background-color: #ededed" required>
                             </div>
                         </div>
                         <div class="col-xl-6 col-12 mt-3">
                             <div>
-                                <label for="sumber_dana" class="form-label">Sumber Dana</label>
+                                <label for="sumber_dana" class="form-label">Sumber Dana*</label>
                                 <select id="sumber_dana" name="sumber_dana" class="form-control border-0"
                                     style="background-color: #ededed">
                                     <option value="" disabled selected>pilih Sumber Dana</option>
@@ -119,7 +119,7 @@
                         </div>
                         <div class="col-xl-6 col-12 mt-3">
                             <div>
-                                <label for="harga_satuan" class="form-label">Harga Satuan</label>
+                                <label for="harga_satuan" class="form-label">Harga Satuan*</label>
                                 <input type="text" id="harga_satuan" name="harga_satuan" class="form-control border-0"
                                     style="background-color: #ededed" placeholder="Masukkan harga satuan"
                                     oninput="updateFormatted('harga_satuan', 'formattedAnggaran')" required>
@@ -129,7 +129,7 @@
                         @if ($user->role == 'admin')    
                         <div class="col-xl-6 col-12 mt-3">
                             <div>
-                                <label for="harga_beli" class="form-label">Harga Beli</label>
+                                <label for="harga_beli" class="form-label">Harga Beli (opsional)</label>
                                 <input type="text" id="harga_beli" name="harga_beli" class="form-control border-0"
                                     style="background-color: #ededed" min="0" placeholder="Masukkan harga beli (boleh dikosongkan dahulu)"
                                     oninput="updateFormatted('harga_beli', 'formattedHargaBeli')">
@@ -139,7 +139,7 @@
                         @endif
                         <div class="col-xl-6 col-12 mt-3">
                             <div>
-                                <label for="banyak" class="form-label">Banyak Barang</label>
+                                <label for="banyak" class="form-label">Banyak Barang*</label>
                                 <input type="number" id="banyak" name="banyak" class="form-control border-0"
                                     style="background-color: #ededed" min="0" placeholder="masukan banyak barang"
                                     required>
@@ -156,7 +156,7 @@
                         
                         <div class="col-xl-6 col-12 mt-3">
                             <div>
-                                <label for="tanggal_ajuan" class="form-label">Tanggal Ajuan</label>
+                                <label for="tanggal_ajuan" class="form-label">Tanggal Ajuan*</label>
                                 <input type="date" id="tanggal_ajuan" name="tanggal_ajuan"
                                     class="form-control border-0" style="background-color: #ededed" required>
                             </div>
@@ -164,7 +164,7 @@
                         @if (in_array($user->role, ['admin']))
                         <div class="col-xl-6 col-12 mt-3">
                             <div>
-                                <label for="tanggal_realisasi" class="form-label">Tanggal Realisasi</label>
+                                <label for="tanggal_realisasi" class="form-label">Tanggal Realisasi (opsional)</label>
                                 <input type="date" id="tanggal_realisasi" name="tanggal_realisasi"
                                     class="form-control border-0" style="background-color: #ededed">
                             </div>
@@ -172,7 +172,14 @@
                         @endif
                         <div class="col-12 mt-3">
                             <div>
-                                <label for="keterangan" class="form-label">Keterangan</label>
+                                <label for="keperluan" class="form-label">keperluan*</label>
+                                <textarea id="keperluan" name="keperluan" class="form-control border-0" required
+                                    style="background-color: #ededed;" placeholder="masukan keperluan"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-12 mt-3">
+                            <div>
+                                <label for="keterangan" class="form-label">Keterangan*</label>
                                 <textarea id="keterangan" name="keterangan" class="form-control border-0" required
                                     style="background-color: #ededed; height: 7rem" placeholder="masukan keterangan"></textarea>
                             </div>

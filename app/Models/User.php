@@ -16,6 +16,11 @@ class User extends Authenticatable
         return $this->hasMany(Jurusan::class);
     }
 
+    public function KodeBarang()
+    {
+        return $this->hasMany(KodeBarang::class);
+    }
+
     public function SumberDana()
     {
         return $this->hasMany(SumberDana::class);

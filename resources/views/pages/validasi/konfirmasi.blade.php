@@ -24,7 +24,7 @@
                     <div class="row">
                         <div class="col-xl-6 col-12">
                             <div>
-                                <label for="status" class="form-label">Status</label>
+                                <label for="status" class="form-label">Status*</label>
                                 <select id="status" name="status" class="form-control border-0" style="background-color: #ededed">
                                     <option value="" disabled selected>Pilih Status</option>
                                     @foreach (['Diajukan', 'Diterima', 'Diperbaiki', 'Dibelikan', 'Di Sarpras', 'Dijurusan', 'Rusak'] as $statusOption)
@@ -38,16 +38,67 @@
                         </div>                        
                         <div class="col-xl-6 col-12 mt-3 mt-xl-0">
                             <div>
-                                <label for="harga_beli" class="form-label">Harga Beli</label>
+                                <label for="harga_beli" class="form-label">Harga Beli (opsional)</label>
                                 <input type="text" id="harga_beli" value="{{ $pengajuan->harga_beli }}" name="harga_beli" class="form-control border-0"
-                                    style="background-color: #ededed" min="0" placeholder="Masukkan harga beli (boleh dikosongkan dahulu)"
+                                    style="background-color: #ededed" min="0" placeholder="Masukkan harga beli"
                                     oninput="updateFormatted('harga_beli', 'formattedHargaBeli')">
                                 <div id="formattedHargaBeli" style="margin-top: 5px; color: #888;"></div>
                             </div>
                         </div>
+                        <div class="col-xl-6 col-12 mt-3">
+                            <div>
+                                <label for="satuan_barang" class="form-label">Satuan Barang*</label>
+                                <input type="text" id="satuan_barang" required value="{{ $pengajuan->satuan_barang }}" name="satuan_barang" class="form-control border-0"
+                                    style="background-color: #ededed" min="0" placeholder="Masukan satuan barang">
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-12 mt-3">
+                            <div>
+                                <label for="kode_barang" class="form-label">Kode Barang*</label>
+                                <select id="kode_barang" name="kode_barang" class="form-control border-0" style="background-color: #ededed">
+                                    <option value="" disabled selected>pilih Kode Barang</option>
+                                    @foreach ($kodeBarang as $item)
+                                        <option value="{{ $item->kode_barang }}">{{ $item->kode_barang }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-12 mt-3">
+                            <div>
+                                <label for="nusp" class="form-label">NUSP*</label>
+                                <select id="nusp" name="nusp" class="form-control border-0" style="background-color: #ededed">
+                                    <option value="" disabled selected>( Pilih kode barang terlebih dahulu )</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-12 mt-3">
+                            <div>
+                                <label for="nama_barang" class="form-label">Nama Barang*</label>
+                                <input type="text" id="nama_barang" value="" readonly name="nama_barang" class="form-control border-0"
+                                    style="background-color: #ededed" min="0" placeholder="Nama barang otomatis muncul">
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-12 mt-3">
+                            <div>
+                                <label for="jenis_barang" class="form-label">Jenis Barang*</label>
+                                <select id="jenis_barang" required name="jenis_barang" class="form-control border-0" style="background-color: #ededed">
+                                    <option value="" disabled selected>pilih jenis Barang</option>
+                                    @foreach ($jenisBarang as $item)
+                                        <option value="{{ $item->jenis_barang }}">{{ $item->jenis_barang }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-12 mt-3">
+                            <div>
+                                <label for="nomor_permintaan" class="form-label">Nomor Permintaan*</label>
+                                <input type="text" required id="nomor_permintaan" value="{{ $pengajuan->nomor_permintaan }}" name="nomor_permintaan" class="form-control border-0"
+                                    style="background-color: #ededed" min="0" placeholder="Masukkan nomor permintaan">
+                            </div>
+                        </div>
                         <div class="col-12 mt-3">
                             <div>
-                                <label for="tanggal_realisasi" class="form-label">Tanggal Realisasi</label>
+                                <label for="tanggal_realisasi" class="form-label">Tanggal Realisasi (opsional)</label>
                                 <input type="date" id="tanggal_realisasi"
                                     value="{{ $pengajuan->tanggal_realisasi }}" required name="tanggal_realisasi"
                                     class="form-control border-0" style="background-color: #ededed">
@@ -55,7 +106,7 @@
                         </div>
                         <div class="col-12 mt-3">
                             <div>
-                                <label for="catatan" class="form-label">Catatan</label>
+                                <label for="catatan" class="form-label">Catatan (opsional)</label>
                                 <textarea id="catatan" name="catatan" class="form-control border-0" required
                                     style="background-color: #ededed; height: 7rem" placeholder="masukan catatan">{{ $pengajuan->catatan }}</textarea>
                             </div>
@@ -149,6 +200,61 @@
                 });
             });
         });
+
+        $(document).ready(function() {
+        // Ketika kode barang dipilih
+        $('#kode_barang').change(function() {
+            var kodeBarang = $(this).val(); // Ambil nilai kode barang yang dipilih
+
+            if(kodeBarang) {
+                $.ajax({
+                    url: '/get-nusp/' + kodeBarang,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        // Kosongkan select nusp
+                        $('#nusp').empty();
+                        $('#nusp').append('<option value="" disabled selected>Pilih NUSP</option>');
+
+                        // Tambahkan opsi nusp
+                        $.each(data, function(key, value) {
+                            $('#nusp').append('<option value="'+ value.nusp +'">' + value.nusp + '</option>');
+                        });
+                    }
+                });
+            }
+        });
+    });
+
+    $(document).ready(function() {
+        // Ketika nusp dipilih
+        $('#nusp').change(function() {
+            var nusp = $(this).val(); // Ambil nilai nusp yang dipilih
+
+            if (nusp) {
+                // Jika ada nusp yang dipilih, kirim AJAX untuk mendapatkan nama_barang
+                $.ajax({
+                    url: '/get-nama-barang/' + nusp,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        // Isi nama barang otomatis berdasarkan nusp yang dipilih
+                        $('#nama_barang').val(data.nama_barang);
+                    }
+                });
+            } else {
+                // Jika nusp kosong atau tidak dipilih, kosongkan field nama_barang
+                $('#nama_barang').val('');
+            }
+        });
+
+        // Jika nusp di-disable atau kosongkan pilihan, kosongkan nama_barang
+        $('#nusp').on('change keyup', function() {
+            if ($(this).val() === "" || $(this).prop("disabled")) {
+                $('#nama_barang').val(''); // Kosongkan nama_barang jika nusp kosong atau disable
+            }
+        });
+    });
     </script>
 @endsection
 <style>

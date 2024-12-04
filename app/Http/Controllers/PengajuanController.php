@@ -91,6 +91,19 @@ class PengajuanController extends Controller
         return view('pages.pengajuan.edit', compact('user', 'sumberDana', 'pengajuan', 'jurusan'));
     }
 
+    public function getNuspByKodeBarang($kode_barang)
+{
+    // Mengambil NUSP dari pengajuan berdasarkan kode_barang
+    $pengajuan = \App\Models\Pengajuan::where('kode_barang', $kode_barang)->first();
+
+    if ($pengajuan) {
+        return response()->json(['nusp' => $pengajuan->nusp]);
+    } else {
+        return response()->json(['nusp' => null]);
+    }
+}
+
+
     public function postTambahPengajuan(Request $request)
     {
         $validated = $request->validate([
@@ -105,6 +118,7 @@ class PengajuanController extends Controller
             'harga_beli' => 'nullable|numeric|min:0',
             'sumber_dana' => 'required|string',
             'keterangan' => 'nullable|string',
+            'keperluan' => 'string',
             'status' => 'required|in:Diajukan,Diterima,Diperbaiki,Dibelikan,Di Sarpras,Dijurusan',
         ]);
     
@@ -139,6 +153,7 @@ class PengajuanController extends Controller
             'total_harga' => $validated['total_harga'],
             'sumber_dana' => $validated['sumber_dana'],
             'keterangan' => $validated['keterangan'],
+            'keperluan' => $validated['keperluan'],
             'status' => $validated['status'],
         ]);
     
@@ -160,6 +175,7 @@ class PengajuanController extends Controller
             'harga_beli' => 'nullable|numeric|min:0',
             'sumber_dana' => 'required|string',
             'keterangan' => 'nullable|string',
+            'keperluan' => 'required|string',
             'status' => 'required|in:Diajukan,Diterima,Diperbaiki,Dibelikan,Di Sarpras,Dijurusan',
         ]);
 
@@ -178,6 +194,7 @@ class PengajuanController extends Controller
             'total_harga' => $validated['total_harga'],
             'sumber_dana' => $validated['sumber_dana'],
             'keterangan' => $validated['keterangan'],
+            'keperluan' => $validated['keperluan'],
             'status' => $validated['status'],
         ]);
 
