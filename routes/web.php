@@ -75,6 +75,8 @@ Route::middleware('auth')->group(function () {
     // Download Format
     Route::get('/download/format-pengajuan', [FormatController::class, 'downloadPengajuan'])->name('download.pengajuan');
     Route::get('/download/format-pengambilan', [FormatController::class, 'downloadPengambilan'])->name('download.pengambilan');
+    Route::get('/download/formatKodeBarang', [FormatController::class, 'formatKodeBarang'])->name('formatKodeBarang');
+    Route::get('/download/formatDetailKodeBarang', [FormatController::class, 'formatDetailKodeBarang'])->name('formatDetailKodeBarang');
 
     // Dashboard
     Route::get('/dashboard', [AnggaranController::class, 'dashboard'])->name('dashboard');

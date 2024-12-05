@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use App\Models\Detail;
 use App\Models\Format;
+use App\Models\FormatDetailKodeBarang;
+use App\Models\FormatKodeBarang;
 use App\Models\FormatPengajuan;
 use App\Models\FormatPengambilan;
 use App\Models\FormatUploadPengajuan;
@@ -194,6 +196,16 @@ class DatabaseSeeder extends Seeder
 
         FormatUploadPengajuan::create([
             'format_upload_pengajuan_file' => 'document/format_upload_pengajuan.xlsx',
+            'user_id' => 1,
+        ]);
+
+        FormatKodeBarang::create([
+            'format_kode_barang' => 'document/kode_barang.xlsx',
+            'user_id' => 1,
+        ]);
+
+        FormatDetailKodeBarang::create([
+            'format_detail_kode_barang' => 'document/detail_kode_barang.xlsx',
             'user_id' => 1,
         ]);
     }

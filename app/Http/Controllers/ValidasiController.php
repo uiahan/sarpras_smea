@@ -110,12 +110,9 @@ class ValidasiController extends Controller
         return redirect()->route('validasi')->with('notif', 'Data pengajuan berhasil divalidasi.');
     }
 
-    public function getNusp($kode_barang)
+    public function getNusp($kode_barang_id)
     {
-        $detailKodeBarang = DetailKodeBarang::where('kode_barang_id', function ($query) use ($kode_barang) {
-            $query->select('id')->from('kode_barangs')->where('kode_barang', $kode_barang);
-        })->get();
-
-        return response()->json($detailKodeBarang);
+        $nuspList = DetailKodeBarang::where('kode_barang_id', $kode_barang_id)->get();
+        return response()->json($nuspList);
     }
 }

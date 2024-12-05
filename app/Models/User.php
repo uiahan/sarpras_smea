@@ -56,6 +56,16 @@ class User extends Authenticatable
         return $this->hasMany(FormatPengambilan::class, 'user_id');
     }
 
+    public function FormatKodeBarang()
+    {
+        return $this->hasMany(FormatKodeBarang::class, 'user_id');
+    }
+
+    public function FormatDetailKodeBarang()
+    {
+        return $this->hasMany(FormatDetailKodeBarang::class, 'user_id');
+    }
+
     public function FormatUploadPengajuan()
     {
         return $this->hasMany(FormatUploadPengajuan::class, 'user_id');

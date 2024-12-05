@@ -27,6 +27,9 @@
                                 <label for="file" class="form-label">Pilih file Excel</label>
                                 <input type="file" class="form-control" id="file" name="file" required>
                             </div>
+                            <a href="{{ route('formatDetailKodeBarang') }}" class="btn mt-3 btn-sm"
+                            style="background-color: #ededed; padding: 6px 12px; font-size: 12px; border-radius: 4px;">
+                            Download Format</a>
                         </div>
                         <div>
                             <button type="submit" class="btn text-white mt-3 btn-kuning" style="background-color: #edbb05"

@@ -300,10 +300,26 @@
             color: var(--first-color-light);
             margin-bottom: 0.5rem;
             transition: .1s
-            font-size: 0.85rem; /* Perkecil ukuran font */
-    padding: 0.3rem 0.8rem; 
+            font-size: 0.75rem; /* Perkecil ukuran teks */
+    padding: 0.2rem 0.9rem; /* Kurangi padding */
         }
 
+        @media screen and (max-height: 750px) {
+    .nav_icon {
+        font-size: 0.9rem !important;
+    }
+
+    .nav_link {
+        font-size: 0.7rem;
+        padding: 0.10rem 1rem;
+    }
+}
+
+
+        .nav_icon {
+            font-size: 1rem; /* Perkecil ukuran ikon */
+
+        }
         .nav_link:hover {
             color: white;
             background-color: var(--white-color);
@@ -313,10 +329,6 @@
 
         .show .nav_link:hover {}
 
-        .nav_icon {
-            font-size: 1.25rem; /* Perkecil ukuran ikon */
-
-        }
 
         .show {
             left: 0

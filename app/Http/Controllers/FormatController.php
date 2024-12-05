@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Format;
+use App\Models\FormatDetailKodeBarang;
+use App\Models\FormatKodeBarang;
 use App\Models\FormatPengajuan;
 use App\Models\FormatPengambilan;
 use App\Models\FormatUploadPengajuan;
@@ -191,6 +193,49 @@ public function uploadFormatPengambilan(Request $request)
     
         // Tentukan path file
         $filePath = public_path($format->format_pengambilan_file);
+    
+        // Periksa apakah file ada
+        if (!file_exists($filePath)) {
+            return redirect()->back()->with('error', 'File tidak ditemukan.');
+        }
+    
+        // Download file
+        return response()->download($filePath);
+    }
+
+    public function formatKodeBarang(Request $request)
+    {
+        // Ganti '1' dengan user_id dari user yang sedang login jika diperlukan
+        $format = FormatKodeBarang::where('user_id', 1)->first();
+    
+        // Periksa apakah format ditemukan
+        if (!$format || !$format->format_kode_barang) {
+            return redirect()->back()->with('error', 'File pengajuan tidak ditemukan.');
+        }
+    
+        // Tentukan path file
+        $filePath = public_path($format->format_kode_barang);
+    
+        // Periksa apakah file ada
+        if (!file_exists($filePath)) {
+            return redirect()->back()->with('error', 'File tidak ditemukan.');
+        }
+    
+        // Download file
+        return response()->download($filePath);
+    }
+    public function formatDetailKodeBarang(Request $request)
+    {
+        // Ganti '1' dengan user_id dari user yang sedang login jika diperlukan
+        $format = FormatDetailKodeBarang::where('user_id', 1)->first();
+    
+        // Periksa apakah format ditemukan
+        if (!$format || !$format->format_detail_kode_barang) {
+            return redirect()->back()->with('error', 'Format tidak ditemukan.');
+        }
+    
+        // Tentukan path file
+        $filePath = public_path($format->format_detail_kode_barang);
     
         // Periksa apakah file ada
         if (!file_exists($filePath)) {

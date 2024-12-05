@@ -86,7 +86,7 @@
                     </div>
                 </form>
                 <div class="table-responsive pb-2">
-                    <table class="table table-bordered" id="example">
+                    <table class="table table-bordered">
                         <thead style="background-color: #f2f2f2">
                             <!-- Table headers -->
                             <tr>

@@ -1,5 +1,5 @@
 @extends('layout.master')
-@section('title', 'Edit Pengajuan')
+@section('title', 'Konfirmasi')
 @section('content')
     <div class="d-flex">
         @include('components.sidebar')
@@ -8,6 +8,7 @@
                 <div class="row">
                     <div class="cool-xl-6 col-12">
                         <h3 class="fw-bold text-secondary">Konfirmasi Pengajuan</h3>
+                        <h6 class="text-secondary">Spesifikasi nama barang : {{ $pengajuan->barang }}</h6>
                     </div>
                     <div class="cool-xl-6 col-12">
                         <p class="text-muted text-xl-end text-secondary">Validasi &gt; Konfirmasi</p>
@@ -58,7 +59,10 @@
                                 <select id="kode_barang" name="kode_barang" class="form-control border-0" style="background-color: #ededed">
                                     <option value="" disabled selected>pilih Kode Barang</option>
                                     @foreach ($kodeBarang as $item)
-                                        <option value="{{ $item->kode_barang }}">{{ $item->kode_barang }}</option>
+                                    <option value="{{ $item->kode_barang }}" 
+                                        {{ $pengajuan->kode_barang == $item->kode_barang ? 'selected' : '' }}>
+                                        {{ $item->kode_barang }}
+                                    </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -67,14 +71,17 @@
                             <div>
                                 <label for="nusp" class="form-label">NUSP*</label>
                                 <select id="nusp" name="nusp" class="form-control border-0" style="background-color: #ededed">
-                                    <option value="" disabled selected>( Pilih kode barang terlebih dahulu )</option>
+                                    <option value="" disabled>(Pilih kode barang terlebih dahulu)</option>
+                                    @if ($pengajuan->nusp)
+                                        <option value="{{ $pengajuan->nusp }}" selected>{{ $pengajuan->nusp }}</option>
+                                    @endif
                                 </select>
                             </div>
                         </div>
                         <div class="col-xl-6 col-12 mt-3">
                             <div>
                                 <label for="nama_barang" class="form-label">Nama Barang*</label>
-                                <input type="text" id="nama_barang" value="" readonly name="nama_barang" class="form-control border-0"
+                                <input type="text" id="nama_barang" value="{{ $pengajuan->nama_barang }}" readonly name="nama_barang" class="form-control border-0"
                                     style="background-color: #ededed" min="0" placeholder="Nama barang otomatis muncul">
                             </div>
                         </div>
@@ -84,7 +91,10 @@
                                 <select id="jenis_barang" required name="jenis_barang" class="form-control border-0" style="background-color: #ededed">
                                     <option value="" disabled selected>pilih jenis Barang</option>
                                     @foreach ($jenisBarang as $item)
-                                        <option value="{{ $item->jenis_barang }}">{{ $item->jenis_barang }}</option>
+                                    <option value="{{ $item->jenis_barang }}" 
+                                        {{ $pengajuan->jenis_barang == $item->jenis_barang ? 'selected' : '' }}>
+                                        {{ $item->jenis_barang }}
+                                    </option>
                                     @endforeach
                                 </select>
                             </div>
