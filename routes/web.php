@@ -186,7 +186,10 @@ Route::middleware('auth')->group(function () {
 
         //nota permintaan
         Route::get('/admin/nomorVerifikasi', [NomorVerifikasiController::class, 'nomorVerifikasi'])->name('nomorVerifikasi');
-        Route::get('/admin/detailNomorVerifikasi/{nomor_permintaan}', [NomorVerifikasiController::class, 'detailNomorVerifikasi'])->name('detailNomorVerifikasi');
+        Route::get('/admin/detailNomorVerifikasi/{nomor_permintaan}', [NomorVerifikasiController::class, 'detailNomorVerifikasi'])
+        ->where('nomor_permintaan', '.*') // Tambahkan regex agar semua karakter diterima
+        ->name('detailNomorVerifikasi');
+    
         Route::get('/pengajuan/download/{nomor_permintaan}', [NomorVerifikasiController::class, 'downloadExcel'])->name('downloadNomorVerifikasiExcel');
         Route::get('/verifikasi/{nomor_permintaan}', [NomorVerifikasiController::class, 'verifikasi'])->name('verifikasi');
         Route::post('/postVerifikasi/{nomor_permintaan}', [NomorVerifikasiController::class, 'postVerifikasi'])->name('postVerifikasi');

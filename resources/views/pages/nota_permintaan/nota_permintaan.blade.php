@@ -99,7 +99,7 @@
                                             <i class="fa-solid fa-check"></i>
                                         </a>
                                     @endif
-                                        <a href="{{ route('detailNomorVerifikasi', $item->nomor_permintaan) }}" class="btn ms-1 btn-primary"
+                                        <a href="{{ route('detailNomorVerifikasi', ['nomor_permintaan' => urlencode($item->nomor_permintaan)]) }}" class="btn ms-1 btn-primary"
                                             style="padding: 12px 15px;">
                                             <i class="fa-regular fa-eye"></i>
                                         </a>

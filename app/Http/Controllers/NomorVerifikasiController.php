@@ -83,16 +83,20 @@ class NomorVerifikasiController extends Controller
     }
 
     public function detailNomorVerifikasi($nomor_permintaan)
-    {
-        $user = Auth::user();
-        $pengajuan = Pengajuan::where('nomor_permintaan', $nomor_permintaan)->get();
+{
+    // Decode parameter
+    $nomor_permintaan = urldecode($nomor_permintaan);
 
-        if ($pengajuan->isEmpty()) {
-            return redirect()->back()->with('error', 'Data tidak ditemukan.');
-        }
+    $user = Auth::user();
+    $pengajuan = Pengajuan::where('nomor_permintaan', $nomor_permintaan)->get();
 
-        return view('pages.nota_permintaan.detail', compact('pengajuan', 'nomor_permintaan', 'user'));
+    if ($pengajuan->isEmpty()) {
+        return redirect()->back()->with('error', 'Data tidak ditemukan.');
     }
+
+    return view('pages.nota_permintaan.detail', compact('pengajuan', 'nomor_permintaan', 'user'));
+}
+
 
     public function downloadExcel($nomor_permintaan)
     {
