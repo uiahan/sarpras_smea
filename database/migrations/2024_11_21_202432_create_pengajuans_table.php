@@ -30,7 +30,6 @@ return new class extends Migration
             $table->string('keterangan');
             $table->enum('status', ['Diajukan', 'Diterima', 'Diperbaiki', 'Dibelikan', 'Di Sarpras', 'Dijurusan', 'Rusak']);
             $table->string('keperluan');
-            $table->string('tes');
             $table->string('satuan_barang')->nullable();
             $table->string('kode_barang')->nullable();
             $table->string('nama_barang')->nullable();
