@@ -62,7 +62,7 @@
                                     <td style="vertical-align: middle;">{{ $item->kode_barang }}</td>
                                     <td style="vertical-align: middle;">{{ $item->nama_barang }}</td>
                                     <td style="vertical-align: middle;">{{ $item->barang }}</td>
-                                    <td style="vertical-align: middle;">{{ $item->banyak }}</td>
+                                    <td style="vertical-align: middle;">{{ $item->jumlah_yg_diacc }}</td>
                                     <td style="vertical-align: middle;">{{ $item->satuan_barang }}</td>
                                     <td style="vertical-align: middle;">{{ $item->keterangan }}</td>
                                 </tr>

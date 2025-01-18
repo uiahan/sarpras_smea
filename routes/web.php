@@ -104,11 +104,15 @@ Route::middleware('auth')->group(function () {
         Route::get('/admin/validasi', [ValidasiController::class, 'validasi'])->name('validasi');
         Route::get('/admin/konfirmasi/{id}', [ValidasiController::class, 'konfirmasi'])->name('konfirmasi');
         Route::post('/admin/update/{id}', [ValidasiController::class, 'update'])->name('update');
-        Route::get('/get-nusp/{kode_barang}', [ValidasiController::class, 'getNusp'])->name('getNusp');
-        Route::get('/get-nama-barang/{nusp}', function ($nusp) {
-            $detailKodeBarang = DetailKodeBarang::where('nusp', $nusp)->first();
-            return response()->json($detailKodeBarang);
-        })->name('getNamaBarang');
+        Route::get('/get-nusp/{kode_barang_id}', [ValidasiController::class, 'getNusp'])->name('getNusp');
+        // Route::get('/get-nama-barang/{nusp}', function ($nusp) {
+        //     $detailKodeBarang = DetailKodeBarang::where('nusp', $nusp)->first();
+        //     return response()->json($detailKodeBarang);
+        // })->name('getNamaBarang');
+        // Route::get('/get-nama-barang/{nusp}', [ValidasiController::class, 'getNamaBarang']);
+        Route::get('/get-nama-barang/{nusp}', [ValidasiController::class, 'getNamaBarang']);
+
+        // Route::get('/get-nusp/{nama_barang}', [ValidasiController::class, 'getNusp']);
 
 
         //kode barang

@@ -73,9 +73,10 @@ class ValidasiController extends Controller
     {
         $user = Auth::user();
         $kodeBarang = KodeBarang::all();
+        $detailKodeBarang = DetailKodeBarang::all();
         $jenisBarang = JenisBarang::all();
         $pengajuan = Pengajuan::findOrFail($id);
-        return view('pages.validasi.konfirmasi', compact('user', 'pengajuan', 'kodeBarang', 'jenisBarang'));
+        return view('pages.validasi.konfirmasi', compact('user', 'pengajuan', 'kodeBarang', 'jenisBarang', 'detailKodeBarang'));
     }
 
     public function update(Request $request, $id)
@@ -113,6 +114,24 @@ class ValidasiController extends Controller
     public function getNusp($kode_barang_id)
     {
         $nuspList = DetailKodeBarang::where('kode_barang_id', $kode_barang_id)->get();
+        // dd($nuspList);
         return response()->json($nuspList);
     }
+
+    public function getNamaBarang($nusp)
+{
+    // Fetch the data where nusp matches
+    $barang = DetailKodeBarang::where('nusp', $nusp)->first();
+
+    if ($barang) {
+        // Return the nama_barang and kode_barang_id as JSON response
+        return response()->json([
+            'nama_barang' => $barang->nama_barang,
+            'kode_barang_id' => $barang->kode_barang_id
+        ]);
+    } else {
+        return response()->json([], 404); // No matching nusp
+    }
+}
+
 }

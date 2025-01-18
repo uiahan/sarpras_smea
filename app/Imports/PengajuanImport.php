@@ -5,6 +5,7 @@ namespace App\Imports;
 use App\Models\Pengajuan;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
@@ -17,22 +18,10 @@ class PengajuanImport implements ToModel, WithHeadingRow
      */
     public function model(array $row)
     {
-        // Cari pengguna berdasarkan jurusan dan role
-        $user = User::where('role', $row['jurusan']) // Gantilah dengan logika yang relevan dengan kasus Anda
-            ->first();
-
-        if (!$user) {
-            // Jika tidak ada pengguna dengan jurusan dan role yang cocok, kembalikan null atau lakukan error handling sesuai kebutuhan Anda
-            return null;
-            
-        }
-
         // Periksa apakah tanggal_ajuan adalah angka serial Excel
         if (is_numeric($row['tanggal_ajuan'])) {
-            // Excel menggunakan serial number untuk tanggal (tanggal 1 = 1900-01-01)
             $tanggalAjuan = Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tanggal_ajuan']))->format('Y-m-d');
         } else {
-            // Jika bukan angka, maka coba parsing tanggal dalam format lain
             $tanggalAjuan = Carbon::parse($row['tanggal_ajuan'])->format('Y-m-d');
         }
 
@@ -45,22 +34,27 @@ class PengajuanImport implements ToModel, WithHeadingRow
             $tanggalRealisasi = null;
         }
 
+        $userLogin = Auth::user();
+
+        // Hitung total harga
+        $hargaSatuan = $row['harga_satuan'] ?? 0;
+        $banyak = $row['banyak'] ?? 0;
+        $totalHarga = $hargaSatuan * $banyak;
+
         return new Pengajuan([
-            'user_id' => $user->id,  // Menggunakan user_id dari hasil pencarian
+            'user_id' => $userLogin->id,  // Menggunakan ID user yang login
             'barang' => $row['barang'],
             'program_kegiatan' => $row['program_kegiatan'],
-            'jurusan' => $row['jurusan'],
+            'jurusan' => $userLogin->role, // Jurusan otomatis dari user yang login
             'tanggal_ajuan' => $tanggalAjuan,
-            'tanggal_realisasi' => $tanggalRealisasi,
-            'harga_satuan' => $row['harga_satuan'],
+            'harga_satuan' => $hargaSatuan,
             'tahun' => $row['tahun'],
-            'banyak' => $row['banyak'],
-            'total_harga' => $row['total_harga'],
-            'catatan' => $row['catatan'],
-            'harga_beli' => $row['harga_beli'],
+            'banyak' => $banyak,
+            'total_harga' => $totalHarga, // Menggunakan hasil perhitungan
             'sumber_dana' => $row['sumber_dana'],
             'keterangan' => $row['keterangan'],
-            'status' => $row['status'],
+            'keperluan' => $row['keperluan'],
+            'status' => 'Diajukan',
         ]);
     }
 }

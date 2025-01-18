@@ -25,7 +25,7 @@ class ExportSPPB implements FromCollection, WithHeadings
                 'Nama Barang' => $item->nama_barang,
               
                 'Spesifikasi Nama Barang' => $item->barang,
-                'Jumlah' => $item->banyak,
+                'Jumlah' => $item->jumlah_yg_diacc,
                 'Satuan Barang' => $item->satuan_barang,
                
                

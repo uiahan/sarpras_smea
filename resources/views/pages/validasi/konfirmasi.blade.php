@@ -26,7 +26,8 @@
                         <div class="col-xl-6 col-12">
                             <div>
                                 <label for="status" class="form-label">Status*</label>
-                                <select id="status" name="status" class="form-control border-0" style="background-color: #ededed">
+                                <select id="status" name="status" class="form-control border-0"
+                                    style="background-color: #ededed">
                                     <option value="" disabled selected>Pilih Status</option>
                                     @foreach (['Diajukan', 'Diterima', 'Diperbaiki', 'Dibelikan', 'Di Sarpras', 'Dijurusan', 'Rusak'] as $statusOption)
                                         <option value="{{ $statusOption }}"
@@ -36,12 +37,13 @@
                                     @endforeach
                                 </select>
                             </div>
-                        </div>                        
+                        </div>
                         <div class="col-xl-6 col-12 mt-3 mt-xl-0">
                             <div>
                                 <label for="harga_beli" class="form-label">Harga Beli (opsional)</label>
-                                <input type="text" id="harga_beli" value="{{ $pengajuan->harga_beli }}" name="harga_beli" class="form-control border-0"
-                                    style="background-color: #ededed" min="0" placeholder="Masukkan harga beli"
+                                <input type="text" id="harga_beli" value="{{ $pengajuan->harga_beli }}" name="harga_beli"
+                                    class="form-control border-0" style="background-color: #ededed" min="0"
+                                    placeholder="Masukkan harga beli"
                                     oninput="updateFormatted('harga_beli', 'formattedHargaBeli')">
                                 <div id="formattedHargaBeli" style="margin-top: 5px; color: #888;"></div>
                             </div>
@@ -49,69 +51,100 @@
                         <div class="col-xl-6 col-12 mt-3">
                             <div>
                                 <label for="satuan_barang" class="form-label">Satuan Barang*</label>
-                                <input type="text" id="satuan_barang" required value="{{ $pengajuan->satuan_barang }}" name="satuan_barang" class="form-control border-0"
-                                    style="background-color: #ededed" min="0" placeholder="Masukan satuan barang">
-                            </div>
-                        </div>
-                        <div class="col-xl-6 col-12 mt-3">
-                            <div>
-                                <label for="kode_barang" class="form-label">Kode Barang*</label>
-                                <select id="kode_barang" name="kode_barang" class="form-control border-0" style="background-color: #ededed">
-                                    <option value="" disabled selected>pilih Kode Barang</option>
-                                    @foreach ($kodeBarang as $item)
-                                    <option value="{{ $item->kode_barang }}" 
-                                        {{ $pengajuan->kode_barang == $item->kode_barang ? 'selected' : '' }}>
-                                        {{ $item->kode_barang }}
-                                    </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-xl-6 col-12 mt-3">
-                            <div>
-                                <label for="nusp" class="form-label">NUSP*</label>
-                                <select id="nusp" name="nusp" class="form-control border-0" style="background-color: #ededed">
-                                    <option value="" disabled>(Pilih kode barang terlebih dahulu)</option>
-                                    @if ($pengajuan->nusp)
-                                        <option value="{{ $pengajuan->nusp }}" selected>{{ $pengajuan->nusp }}</option>
-                                    @endif
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-xl-6 col-12 mt-3">
-                            <div>
-                                <label for="nama_barang" class="form-label">Nama Barang*</label>
-                                <input type="text" id="nama_barang" value="{{ $pengajuan->nama_barang }}" readonly name="nama_barang" class="form-control border-0"
-                                    style="background-color: #ededed" min="0" placeholder="Nama barang otomatis muncul">
+                                <input type="text" id="satuan_barang" required value="{{ $pengajuan->satuan_barang }}"
+                                    name="satuan_barang" class="form-control border-0" style="background-color: #ededed"
+                                    min="0" placeholder="Masukan satuan barang">
                             </div>
                         </div>
                         <div class="col-xl-6 col-12 mt-3">
                             <div>
                                 <label for="jenis_barang" class="form-label">Jenis Barang*</label>
-                                <select id="jenis_barang" required name="jenis_barang" class="form-control border-0" style="background-color: #ededed">
+                                <select id="jenis_barang" required name="jenis_barang" class="form-control border-0"
+                                    style="background-color: #ededed">
                                     <option value="" disabled selected>pilih jenis Barang</option>
                                     @foreach ($jenisBarang as $item)
-                                    <option value="{{ $item->jenis_barang }}" 
-                                        {{ $pengajuan->jenis_barang == $item->jenis_barang ? 'selected' : '' }}>
-                                        {{ $item->jenis_barang }}
-                                    </option>
+                                        <option value="{{ $item->jenis_barang }}"
+                                            {{ $pengajuan->jenis_barang == $item->jenis_barang ? 'selected' : '' }}>
+                                            {{ $item->jenis_barang }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
+                        <!-- Select kode_barang -->
+                        <div class="col-xl-6 col-12 mt-3">
+                            <div>
+                                <label for="kode_barang" class="form-label">Kode Barang*</label>
+                                <select id="kode_barang" name="kode_barang_id" class="form-control border-0"
+                                    style="background-color: #ededed">
+                                    <option value="" disabled selected>Pilih Kode Barang</option>
+                                    @foreach ($kodeBarang as $item)
+                                        <option value="{{ $item->id }}" data-kode-barang="{{ $item->kode_barang }}"
+                                            {{ $pengajuan->kode_barang == $item->kode_barang ? 'selected' : '' }}>
+                                            {{ $item->kode_barang }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Input hidden untuk kode_barang -->
+                        <input type="hidden" id="kode_barang_hidden" name="kode_barang"
+                            value="{{ $pengajuan->kode_barang }}">
+
+
+                            <div class="col-6 mt-3">
+                                <div>
+                                    <label for="nusp" class="form-label">NUSP*</label>
+                                    <select id="nusp" name="nusp" class="form-control border-0"
+                                        style="background-color: #ededed">
+                                        <option value="" disabled {{ empty($pengajuan->nusp) ? 'selected' : '' }}>Pilih NUSP</option>
+                                        @foreach ($detailKodeBarang as $item)
+                                            <option value="{{ $item->nusp }}" 
+                                                data-kode-barang="{{ $item->kode_barang_id }}" 
+                                                data-nama-barang="{{ $item->nama_barang }}" 
+                                                {{ $pengajuan->nusp == $item->nusp ? 'selected' : '' }}>
+                                                {{ $item->nusp }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="col-12 mt-3">
+                                <div>
+                                    <label for="nama_barang" class="form-label">Nama Barang*</label>
+                                    <select id="nama_barang" name="nama_barang" class="form-control border-0"
+                                        style="background-color: #ededed">
+                                        <option value="" disabled {{ empty($pengajuan->nama_barang) ? 'selected' : '' }}>Pilih Nama Barang</option>
+                                        @foreach ($detailKodeBarang as $item)
+                                            <option value="{{ $item->nama_barang }}" 
+                                                data-kode-barang="{{ $item->kode_barang_id }}" 
+                                                data-nusp="{{ $item->nusp }}" 
+                                                {{ $pengajuan->nama_barang == $item->nama_barang ? 'selected' : '' }}>
+                                                {{ $item->nama_barang }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            
+
                         <div class="col-xl-6 col-12 mt-3">
                             <div>
                                 <label for="nomor_permintaan" class="form-label">Nomor Permintaan*</label>
-                                <input type="text" required id="nomor_permintaan" value="{{ $pengajuan->nomor_permintaan }}" name="nomor_permintaan" class="form-control border-0"
-                                    style="background-color: #ededed" min="0" placeholder="Masukkan nomor permintaan">
+                                <input type="text" required id="nomor_permintaan"
+                                    value="{{ $pengajuan->nomor_permintaan }}" name="nomor_permintaan"
+                                    class="form-control border-0" style="background-color: #ededed" min="0"
+                                    placeholder="Masukkan nomor permintaan">
                             </div>
                         </div>
-                        <div class="col-12 mt-3">
+                        <div class="col-xl-6 col-12 mt-3">
                             <div>
                                 <label for="tanggal_realisasi" class="form-label">Tanggal Realisasi (opsional)</label>
-                                <input type="date" id="tanggal_realisasi"
-                                    value="{{ $pengajuan->tanggal_realisasi }}" required name="tanggal_realisasi"
-                                    class="form-control border-0" style="background-color: #ededed">
+                                <input type="date" id="tanggal_realisasi" value="{{ $pengajuan->tanggal_realisasi }}"
+                                    required name="tanggal_realisasi" class="form-control border-0"
+                                    style="background-color: #ededed">
                             </div>
                         </div>
                         <div class="col-12 mt-3">
@@ -127,8 +160,7 @@
                                 Konfirmasi Pengajuan
                             </button>
                             <a class="btn text-white mt-3 btn-kuning ms-1 btn-merah" href="javascript:void(0);"
-                                onclick="window.history.back();"
-                                style="background-color: #d9261c">
+                                onclick="window.history.back();" style="background-color: #d9261c">
                                 Kembali</a>
                         </div>
                     </div>
@@ -211,60 +243,160 @@
             });
         });
 
-        $(document).ready(function() {
-        // Ketika kode barang dipilih
-        $('#kode_barang').change(function() {
-            var kodeBarang = $(this).val(); // Ambil nilai kode barang yang dipilih
+        document.getElementById('kode_barang').addEventListener('change', function() {
 
-            if(kodeBarang) {
-                $.ajax({
-                    url: '/get-nusp/' + kodeBarang,
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function(data) {
-                        // Kosongkan select nusp
-                        $('#nusp').empty();
-                        $('#nusp').append('<option value="" disabled selected>Pilih NUSP</option>');
+            let kodeBarang = this.value;
+            console.log(kodeBarang);
 
-                        // Tambahkan opsi nusp
-                        $.each(data, function(key, value) {
-                            $('#nusp').append('<option value="'+ value.nusp +'">' + value.nusp + '</option>');
+            if (kodeBarang) {
+                fetch(`/get-nusp/${kodeBarang}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data); // Debugging untuk melihat data yang diterima
+                        let nuspSelect = document.getElementById('nusp');
+                        nuspSelect.innerHTML = ''; // Clear existing options
+                        let defaultOption = document.createElement('option');
+                        defaultOption.value = '';
+                        defaultOption.disabled = true;
+                        defaultOption.selected = true;
+                        defaultOption.textContent = '(Pilih kode barang terlebih dahulu)';
+                        nuspSelect.appendChild(defaultOption);
+
+                        data.forEach(item => {
+                            let option = document.createElement('option');
+                            option.value = item.nusp; // Pastikan item.nusp berisi nilai yang benar
+                            option.textContent = item.nusp;
+                            nuspSelect.appendChild(option);
                         });
-                    }
-                });
+                    });
             }
         });
-    });
 
-    $(document).ready(function() {
-        // Ketika nusp dipilih
-        $('#nusp').change(function() {
-            var nusp = $(this).val(); // Ambil nilai nusp yang dipilih
+        $(document).ready(function() {
 
-            if (nusp) {
-                // Jika ada nusp yang dipilih, kirim AJAX untuk mendapatkan nama_barang
-                $.ajax({
-                    url: '/get-nama-barang/' + nusp,
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function(data) {
-                        // Isi nama barang otomatis berdasarkan nusp yang dipilih
-                        $('#nama_barang').val(data.nama_barang);
+            // Ketika kode_barang dipilih
+            $('#kode_barang').change(function() {
+                var kodeBarangId = $(this).val(); // Ambil nilai kode_barang yang dipilih
+
+                // Menampilkan hanya nama_barang yang sesuai dengan kode_barang
+                $('#nama_barang').find('option').each(function() {
+                    var optionKodeBarang = $(this).data('kode-barang');
+
+                    // Menyembunyikan nama_barang yang tidak sesuai dengan kode_barang
+                    if (optionKodeBarang != kodeBarangId && kodeBarangId != "") {
+                        $(this).hide();
+                    } else {
+                        $(this).show(); // Menampilkan nama_barang yang sesuai
                     }
                 });
-            } else {
-                // Jika nusp kosong atau tidak dipilih, kosongkan field nama_barang
+                // Menampilkan hanya nama_barang yang sesuai dengan kode_barang
+                $('#nusp').find('option').each(function() {
+                    var optionKodeBarang = $(this).data('kode-barang');
+
+                    // Menyembunyikan nama_barang yang tidak sesuai dengan kode_barang
+                    if (optionKodeBarang != kodeBarangId && kodeBarangId != "") {
+                        $(this).hide();
+                    } else {
+                        $(this).show(); // Menampilkan nama_barang yang sesuai
+                    }
+                });
+
+                // Reset nilai nama_barang dan nusp jika kode_barang diubah
                 $('#nama_barang').val('');
-            }
+                $('#nusp').val('');
+            });
+
+            // Ketika nama_barang dipilih
+            $('#nama_barang').change(function() {
+                var selectedOption = $(this).find('option:selected');
+                var kodeBarangId = selectedOption.data('kode-barang');
+                var nusp = selectedOption.data('nusp');
+
+                // Menyembunyikan nama_barang yang tidak sesuai dengan kode_barang
+                $('#nama_barang').find('option').each(function() {
+                    var optionKodeBarang = $(this).data('kode-barang');
+
+                    // Menyembunyikan nama_barang yang tidak sesuai dengan kode_barang
+                    if (optionKodeBarang != kodeBarangId && kodeBarangId != "") {
+                        $(this).hide();
+                    } else {
+                        $(this).show(); // Menampilkan nama_barang yang sesuai
+                    }
+                });
+
+                $('#nusp').find('option').each(function() {
+                    var optionKodeBarang = $(this).data('kode-barang');
+
+                    // Menyembunyikan nama_barang yang tidak sesuai dengan kode_barang
+                    if (optionKodeBarang != kodeBarangId && kodeBarangId != "") {
+                        $(this).hide();
+                    } else {
+                        $(this).show(); // Menampilkan nama_barang yang sesuai
+                    }
+                });
+
+                // Mengupdate kode_barang
+                $('#kode_barang').val(kodeBarangId); // Mengisi kode_barang tanpa menonaktifkan select
+
+                // Mengupdate nusp sesuai dengan nama_barang yang dipilih
+                $('#nusp').val(nusp); // Mengisi nusp otomatis sesuai nama_barang yang dipilih
+            });
+
+
         });
 
-        // Jika nusp di-disable atau kosongkan pilihan, kosongkan nama_barang
-        $('#nusp').on('change keyup', function() {
-            if ($(this).val() === "" || $(this).prop("disabled")) {
-                $('#nama_barang').val(''); // Kosongkan nama_barang jika nusp kosong atau disable
-            }
+        $(document).ready(function() {
+
+            // When nusp changes
+            $('#nusp').change(function() {
+                var nusp = $(this).val(); // Get the selected nusp value
+
+                if (nusp) {
+                    // Make an AJAX request to fetch nama_barang based on the selected nusp
+                    $.ajax({
+                        url: '/get-nama-barang/' +
+                        nusp, // Assuming this is your route to get the nama_barang
+                        method: 'GET',
+                        success: function(data) {
+                            if (data.nama_barang) {
+                                // Set the nama_barang and kode_barang based on the response
+                                $('#nama_barang').val(data
+                                .nama_barang); // Set the nama_barang field
+                                $('#kode_barang').val(data
+                                .kode_barang_id); // Set the kode_barang_id field
+                            }
+                        },
+                        error: function() {
+                            // Handle the case where no matching nusp is found
+                            $('#nama_barang').val(''); // Clear nama_barang field if no match
+                            $('#kode_barang').val(''); // Clear kode_barang field if no match
+                        }
+                    });
+                } else {
+                    // Reset if nusp is cleared
+                    $('#nama_barang').val('');
+                    $('#kode_barang').val('');
+                }
+            });
+
         });
-    });
+
+        $(document).ready(function() {
+            $('#submit-btn').on('click', function() {
+                // Ambil data kode_barang yang dipilih dari atribut data-kode-barang
+                const selectedOption = $('#kode_barang option:selected');
+                const kodeBarang = selectedOption.data(
+                'kode-barang'); // Ambil data-kode-barang dari opsi terpilih
+
+                // Set nilai input hidden dengan kode_barang
+                if (kodeBarang) {
+                    $('#kode_barang_hidden').val(kodeBarang); // Masukkan kode_barang ke input hidden
+                }
+
+                // Kirimkan form
+                $('#form-edit-pengajuan').submit();
+            });
+        });
     </script>
 @endsection
 <style>
